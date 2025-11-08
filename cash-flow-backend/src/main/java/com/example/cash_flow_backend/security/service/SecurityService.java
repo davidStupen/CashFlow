@@ -62,6 +62,7 @@ public class SecurityService {
                 Files.createDirectories(Paths.get(dirPath));
             }
             Files.copy(img.getInputStream(), Paths.get(dirPath).resolve(storageName), StandardCopyOption.REPLACE_EXISTING);
+            user.setProfileImg(storageName);
             this.userRepo.save(user);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
