@@ -74,6 +74,7 @@ public class SecurityService {
             Optional<User> findByUsername = this.userRepo.findByUsername(user.getUsername());
             user.setRole(findByUsername.get().getRole());
             this.jwtService.generateToken(new UserTokenDTO(user.getUsername(), user.getRole()));
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
