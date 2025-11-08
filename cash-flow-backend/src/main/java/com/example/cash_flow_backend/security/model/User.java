@@ -23,4 +23,6 @@ public class User {
     private Role role;
     @Column(nullable = false, unique = true, length = 55)
     private String email;
+    @Column(unique = true)
+    private String profileImg;
 }
