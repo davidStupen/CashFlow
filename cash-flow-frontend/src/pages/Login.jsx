@@ -16,7 +16,8 @@ const Login = () => {
   const handlerSubmit = async e => {
     e.preventDefault()
     try{
-      await api.post("/api/auth/login", login)
+      const response = await api.post("/api/auth/login", login)
+      localStorage.setItem("token", response.data)
       navigate("/main")
     } catch(err){
       setError(err.response?.data)
