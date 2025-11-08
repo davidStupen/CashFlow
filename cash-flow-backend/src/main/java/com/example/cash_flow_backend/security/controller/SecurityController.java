@@ -1,8 +1,25 @@
 package com.example.cash_flow_backend.security.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.example.cash_flow_backend.security.model.User;
+import com.example.cash_flow_backend.security.service.SecurityService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/auth")
 public class SecurityController {
+    private SecurityService securityService;
 
+    public SecurityController(SecurityService securityService) {
+        this.securityService = securityService;
+    }
+
+    @PostMapping("/registry")
+    public ResponseEntity<?> registry(@RequestBody User user){
+        return this.securityService.saveUser(user);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user){
+        return this.securityService.login(user);
+    }
 }
