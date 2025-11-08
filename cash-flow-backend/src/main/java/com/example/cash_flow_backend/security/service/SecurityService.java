@@ -1,6 +1,6 @@
 package com.example.cash_flow_backend.security.service;
 
-import com.example.cash_flow_backend.security.UserException;
+import com.example.cash_flow_backend.security.exeption.UserException;
 import com.example.cash_flow_backend.security.model.Role;
 import com.example.cash_flow_backend.security.model.User;
 import com.example.cash_flow_backend.security.model.dto.UserTokenDTO;
