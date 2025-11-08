@@ -39,7 +39,7 @@ public class SecurityService {
         Optional<User> checkEmail = this.userRepo.findByEmail(user.getEmail());
         Optional<User> checkImgName = this.userRepo.findByProfileImg(user.getProfileImg());
         if (checkUsername.isPresent()){
-
+            throw new UserException("The username already exist " + user.getUsername());
         }
         if (checkEmail.isPresent()) {
             throw new UserException("The email already exist " + user.getEmail());
