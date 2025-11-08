@@ -35,13 +35,12 @@ public class SecurityService {
             throw new UserException("The email already exist " + user.getEmail());
         }
         if (checkImgName.isPresent()) {
-            throw new UserException("The profile img name already exist " + user.getProfileImg());
+            throw new UserException("The profile name already exist " + user.getProfileImg());
         }
         return false;
     }
-
     public ResponseEntity<?> saveUser(User user) throws UserException {
-        if ( ! this.isExistUserInDB(user)){
+        if (this.isExistUserInDB(user)){
             user.setPassword(this.encoder.encode(user.getPassword()));
             user.setRole(Role.ROLE_USER);
         }
