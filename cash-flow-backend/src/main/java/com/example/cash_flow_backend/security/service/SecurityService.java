@@ -5,6 +5,7 @@ import com.example.cash_flow_backend.security.model.Role;
 import com.example.cash_flow_backend.security.model.User;
 import com.example.cash_flow_backend.security.model.dto.UserTokenDTO;
 import com.example.cash_flow_backend.security.repository.UserRepo;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,37 +35,20 @@ public class SecurityService {
         this.jwtService = jwtService;
         this.userRepo = userRepo;
     }
-    private boolean isExistUserInDB(User user) throws UserException {
-        Optional<User> checkUsername = this.userRepo.findByUsername(user.getUsername());
-        Optional<User> checkEmail = this.userRepo.findByEmail(user.getEmail());
-        Optional<User> checkImgName = this.userRepo.findByProfileImg(user.getProfileImg());
-        if (checkUsername.isPresent()){
-            throw new UserException("The username already exist " + user.getUsername());
+    public ResponseEntity<?> saveUser(User user, MultipartFile img) throws UserException, IOException, DataIntegrityViolationException {
+        if ( ! user.getEmail().contains("@")){
+            throw new UserException("The email has to containing @");
         }
-        if (checkEmail.isPresent()) {
-            throw new UserException("The email already exist " + user.getEmail());
+        user.setPassword(this.encoder.encode(user.getPassword()));
+        user.setRole(Role.ROLE_USER);
+        String storageName = StringUtils.cleanPath(Objects.requireNonNull(img.getOriginalFilename()));
+        user.setProfileImg(storageName);
+        this.userRepo.save(user);
+        String dirPath = "data/profileImg";
+        if (Files.notExists(Paths.get(dirPath))){
+            Files.createDirectories(Paths.get(dirPath));
         }
-        if (checkImgName.isPresent()) {
-            throw new UserException("The profile img name already exist " + user.getProfileImg());
-        }
-        return false;
-    }
-    public ResponseEntity<?> saveUser(User user, MultipartFile img) throws UserException, IOException {
-        if ( ! this.isExistUserInDB(user)){
-            if ( ! user.getEmail().contains("@")){
-                throw new UserException("The email has to containing @");
-            }
-            user.setPassword(this.encoder.encode(user.getPassword()));
-            user.setRole(Role.ROLE_USER);
-            String dirPath = "data/profileImg";
-            String storageName = StringUtils.cleanPath(Objects.requireNonNull(img.getOriginalFilename()));
-            if (Files.notExists(Paths.get(dirPath))){
-                Files.createDirectories(Paths.get(dirPath));
-            }
-            Files.copy(img.getInputStream(), Paths.get(dirPath).resolve(storageName), StandardCopyOption.REPLACE_EXISTING);
-            user.setProfileImg(storageName);
-            this.userRepo.save(user);
-        }
+        Files.copy(img.getInputStream(), Paths.get(dirPath).resolve(storageName), StandardCopyOption.REPLACE_EXISTING);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
