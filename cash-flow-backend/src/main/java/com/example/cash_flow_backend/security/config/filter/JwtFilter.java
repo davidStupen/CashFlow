@@ -1,5 +1,6 @@
 package com.example.cash_flow_backend.security.config.filter;
 
+import com.example.cash_flow_backend.security.service.JwtService;
 import com.example.cash_flow_backend.security.service.MyUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,7 +17,13 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     private MyUserDetailsService detailsService;
-    private JwtToken jwtToken;
+    private JwtService jwtToken;
+
+    public JwtFilter(MyUserDetailsService detailsService, JwtService jwtToken) {
+        this.detailsService = detailsService;
+        this.jwtToken = jwtToken;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String autHeader = request.getHeader("Authorization");
