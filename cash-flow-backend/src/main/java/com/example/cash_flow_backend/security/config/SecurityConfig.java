@@ -36,14 +36,14 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(12);
     }
     @Bean
-    public SecurityFilterChain authenticationManager(HttpSecurity security) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         return security.csrf(customize -> customize.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers("**/login", "**/registry").permitAll();
                     request.requestMatchers("**/user/**", "**/admin/**").hasAnyRole("USER", "ADMIN");
                     request.requestMatchers("**/admin/**").hasRole("ADMIN");
-                    request.anyRequest().authenticated().anyRequest();
+                    request.anyRequest().authenticated();
                 })
                 .addFilterBefore(this.jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
