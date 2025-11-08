@@ -32,6 +32,10 @@ public class SecurityController {
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user){
-        return this.securityService.login(user);
+        try {
+            return this.securityService.login(user);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -52,16 +53,12 @@ public class SecurityService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> login(User user) {
-        try {
-            this.authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-            Optional<User> findByUsername = this.userRepo.findByUsername(user.getUsername());
-            user.setRole(findByUsername.get().getRole());
-            this.jwtService.generateToken(new UserTokenDTO(user.getUsername(), user.getRole()));
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> login(User user) throws UsernameNotFoundException {
+        this.authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        Optional<User> findByUsername = this.userRepo.findByUsername(user.getUsername());
+        user.setRole(findByUsername.get().getRole());
+        String token = this.jwtService.generateToken(new UserTokenDTO(user.getUsername(), user.getRole()));
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 }
