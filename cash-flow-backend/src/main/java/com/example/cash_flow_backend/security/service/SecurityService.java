@@ -36,10 +36,22 @@ public class SecurityService {
         this.jwtService = jwtService;
         this.userRepo = userRepo;
     }
-    public ResponseEntity<?> saveUser(User user, MultipartFile img) throws UserException, IOException, DataIntegrityViolationException {
+    private void wrongRequestException(User user) throws UserException {
+        if (user.getUsername().isEmpty()){
+            throw new UserException("Username is required");
+        }
+        if (user.getEmail().isEmpty()){
+            throw new UserException("Email is required");
+        }
+        if (user.getPassword().isEmpty()){
+            throw new UserException("Password is required");
+        }
         if ( ! user.getEmail().contains("@")){
             throw new UserException("The email has to containing @");
         }
+    }
+    public ResponseEntity<?> saveUser(User user, MultipartFile img) throws UserException, IOException, DataIntegrityViolationException {
+        this.wrongRequestException(user);
         user.setPassword(this.encoder.encode(user.getPassword()));
         user.setRole(Role.ROLE_USER);
         if (img != null){
