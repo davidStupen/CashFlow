@@ -42,14 +42,16 @@ public class SecurityService {
         }
         user.setPassword(this.encoder.encode(user.getPassword()));
         user.setRole(Role.ROLE_USER);
-        String storageName = StringUtils.cleanPath(Objects.requireNonNull(img.getOriginalFilename()));
-        user.setProfileImg(storageName);
-        this.userRepo.save(user);
-        String dirPath = "data/profileImg";
-        if (Files.notExists(Paths.get(dirPath))){
-            Files.createDirectories(Paths.get(dirPath));
+        if (img != null){
+            String storageName = StringUtils.cleanPath(Objects.requireNonNull(img.getOriginalFilename()));
+            user.setProfileImg(storageName);
+            String dirPath = "data/profileImg";
+            if (Files.notExists(Paths.get(dirPath))){
+                Files.createDirectories(Paths.get(dirPath));
+            }
+            Files.copy(img.getInputStream(), Paths.get(dirPath).resolve(storageName), StandardCopyOption.REPLACE_EXISTING);
         }
-        Files.copy(img.getInputStream(), Paths.get(dirPath).resolve(storageName), StandardCopyOption.REPLACE_EXISTING);
+        this.userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

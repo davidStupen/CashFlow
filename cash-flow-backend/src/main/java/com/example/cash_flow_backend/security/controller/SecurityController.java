@@ -22,7 +22,7 @@ public class SecurityController {
     }
 
     @PostMapping("/registry")
-    public ResponseEntity<?> registry(@RequestPart User user, @RequestPart MultipartFile img){
+    public ResponseEntity<?> registry(@RequestPart User user, @RequestPart(required = false) MultipartFile img){
         try {
             return this.securityService.saveUser(user, img);
         } catch (UserException | DataIntegrityViolationException e) {
