@@ -37,7 +37,7 @@ public class SecurityService {
         Optional<User> checkEmail = this.userRepo.findByEmail(user.getEmail());
         Optional<User> checkImgName = this.userRepo.findByProfileImg(user.getProfileImg());
         if (checkUsername.isPresent()){
-            throw new UserException("The username already exists " + user.getUsername());
+
         }
         if (checkEmail.isPresent()) {
             throw new UserException("The email already exist " + user.getEmail());
@@ -45,13 +45,13 @@ public class SecurityService {
         if (checkImgName.isPresent()) {
             throw new UserException("The profile img name already exist " + user.getProfileImg());
         }
-        if ( ! user.getEmail().contains("@")){
-            throw new UserException("The email has to containing @");
-        }
         return false;
     }
     public ResponseEntity<?> saveUser(User user, MultipartFile img) throws UserException, IOException {
         if ( ! this.isExistUserInDB(user)){
+            if ( ! user.getEmail().contains("@")){
+                throw new UserException("The email has to containing @");
+            }
             user.setPassword(this.encoder.encode(user.getPassword()));
             user.setRole(Role.ROLE_USER);
             String dirPath = "data/profileImg";
