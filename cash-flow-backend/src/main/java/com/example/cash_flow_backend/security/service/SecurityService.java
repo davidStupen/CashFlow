@@ -1,5 +1,6 @@
 package com.example.cash_flow_backend.security.service;
 
+import com.example.cash_flow_backend.security.UserException;
 import com.example.cash_flow_backend.security.model.Role;
 import com.example.cash_flow_backend.security.model.User;
 import com.example.cash_flow_backend.security.repository.UserRepo;
@@ -24,10 +25,10 @@ public class SecurityService {
         this.userRepo = userRepo;
     }
 
-    public ResponseEntity<?> saveUser(User user) {
+    public ResponseEntity<?> saveUser(User user) throws UserException {
         Optional<User> u = this.userRepo.findByUsername(user.getUsername());
         if (u.isPresent()){
-
+            throw new UserException("The username already exists " + user.getUsername());
         }
         user.setPassword(this.encoder.encode(user.getPassword()));
         user.setRole(Role.ROLE_USER);
