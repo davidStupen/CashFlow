@@ -58,14 +58,17 @@ public class SecurityService {
         if (img != null){
             String storageName = StringUtils.cleanPath(Objects.requireNonNull(img.getOriginalFilename()));
             userDTO.setProfileImg(storageName);
+            User user = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole(), userDTO.getEmail(), userDTO.getProfileImg());
+            this.userRepo.save(user);
             String dirPath = "data/profileImg";
             if (Files.notExists(Paths.get(dirPath))){
                 Files.createDirectories(Paths.get(dirPath));
             }
             Files.copy(img.getInputStream(), Paths.get(dirPath).resolve(storageName), StandardCopyOption.REPLACE_EXISTING);
+        } else {
+            User user = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole(), userDTO.getEmail(), userDTO.getProfileImg());
+            this.userRepo.save(user);
         }
-        User user = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole(), userDTO.getEmail(), userDTO.getProfileImg());
-        this.userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
