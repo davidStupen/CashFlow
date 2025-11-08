@@ -3,10 +3,12 @@ package com.example.cash_flow_backend.security.service;
 import com.example.cash_flow_backend.security.UserException;
 import com.example.cash_flow_backend.security.model.Role;
 import com.example.cash_flow_backend.security.model.User;
+import com.example.cash_flow_backend.security.model.dto.UserTokenDTO;
 import com.example.cash_flow_backend.security.repository.UserRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -66,5 +68,14 @@ public class SecurityService {
     }
 
     public ResponseEntity<?> login(User user) {
+        try {
+            this.authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+            Optional<User> findByUsername = this.userRepo.findByUsername(user.getUsername());
+            user.setRole(findByUsername.get().getRole());
+            this.jwtService.generateToken(new UserTokenDTO(user.getUsername(), user.getRole()));
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
