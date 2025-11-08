@@ -2,6 +2,7 @@ package com.example.cash_flow_backend.security.controller;
 
 import com.example.cash_flow_backend.security.exeption.UserException;
 import com.example.cash_flow_backend.security.model.User;
+import com.example.cash_flow_backend.security.model.dto.PostUserDTO;
 import com.example.cash_flow_backend.security.service.SecurityService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class SecurityController {
     }
 
     @PostMapping("/registry")
-    public ResponseEntity<?> registry(@RequestPart User user, @RequestPart(required = false) MultipartFile img){
+    public ResponseEntity<?> registry(@RequestPart PostUserDTO user, @RequestPart(required = false) MultipartFile img){
         try {
             return this.securityService.saveUser(user, img);
         } catch (UserException | DataIntegrityViolationException e) {
@@ -32,7 +33,7 @@ public class SecurityController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user){
+    public ResponseEntity<?> login(@RequestBody PostUserDTO user){
         try {
             return this.securityService.login(user);
         } catch (Exception e) {

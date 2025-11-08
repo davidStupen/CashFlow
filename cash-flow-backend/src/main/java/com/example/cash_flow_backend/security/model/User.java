@@ -25,4 +25,12 @@ public class User {
     private String email;
     @Column(unique = true)
     private String profileImg;
+
+    public User(String username, String password, Role role, String email, String profileImg) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+        this.profileImg = profileImg;
+    }
 }

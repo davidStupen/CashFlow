@@ -3,6 +3,7 @@ package com.example.cash_flow_backend.security.service;
 import com.example.cash_flow_backend.security.exeption.UserException;
 import com.example.cash_flow_backend.security.model.Role;
 import com.example.cash_flow_backend.security.model.User;
+import com.example.cash_flow_backend.security.model.dto.PostUserDTO;
 import com.example.cash_flow_backend.security.model.dto.UserTokenDTO;
 import com.example.cash_flow_backend.security.repository.UserRepo;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,7 +37,7 @@ public class SecurityService {
         this.jwtService = jwtService;
         this.userRepo = userRepo;
     }
-    private void wrongRequestException(User user) throws UserException {
+    private void wrongRequestException(PostUserDTO user) throws UserException {
         if (user.getUsername().isEmpty()){
             throw new UserException("Username is required");
         }
@@ -50,29 +51,30 @@ public class SecurityService {
             throw new UserException("The email has to containing @");
         }
     }
-    public ResponseEntity<?> saveUser(User user, MultipartFile img) throws UserException, IOException, DataIntegrityViolationException {
-        this.wrongRequestException(user);
-        user.setPassword(this.encoder.encode(user.getPassword()));
-        user.setRole(Role.ROLE_USER);
+    public ResponseEntity<?> saveUser(PostUserDTO userDTO, MultipartFile img) throws UserException, IOException, DataIntegrityViolationException {
+        this.wrongRequestException(userDTO);
+        userDTO.setRole(Role.ROLE_USER);
+        userDTO.setPassword(this.encoder.encode(userDTO.getPassword()));
         if (img != null){
             String storageName = StringUtils.cleanPath(Objects.requireNonNull(img.getOriginalFilename()));
-            user.setProfileImg(storageName);
+            userDTO.setProfileImg(storageName);
             String dirPath = "data/profileImg";
             if (Files.notExists(Paths.get(dirPath))){
                 Files.createDirectories(Paths.get(dirPath));
             }
             Files.copy(img.getInputStream(), Paths.get(dirPath).resolve(storageName), StandardCopyOption.REPLACE_EXISTING);
         }
+        User user = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole(), userDTO.getEmail(), userDTO.getProfileImg());
         this.userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> login(User user) throws UsernameNotFoundException {
+    public ResponseEntity<?> login(PostUserDTO postUserDTO) throws UsernameNotFoundException {
         this.authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        Optional<User> findByUsername = this.userRepo.findByUsername(user.getUsername());
-        user.setRole(findByUsername.get().getRole());
-        String token = this.jwtService.generateToken(new UserTokenDTO(user.getUsername(), user.getRole()));
+                .authenticate(new UsernamePasswordAuthenticationToken(postUserDTO.getUsername(), postUserDTO.getPassword()));
+        Optional<User> findByUsername = this.userRepo.findByUsername(postUserDTO.getUsername());
+        postUserDTO.setRole(findByUsername.get().getRole());
+        String token = this.jwtService.generateToken(new UserTokenDTO(postUserDTO.getUsername(), postUserDTO.getRole()));
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 }
