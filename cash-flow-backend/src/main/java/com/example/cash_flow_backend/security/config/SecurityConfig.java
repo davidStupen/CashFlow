@@ -40,9 +40,9 @@ public class SecurityConfig {
         return security.csrf(customize -> customize.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("**/login", "**/registry").permitAll();
-                    request.requestMatchers("**/user/**", "**/admin/**").hasAnyRole("USER", "ADMIN");
-                    request.requestMatchers("**/admin/**").hasRole("ADMIN");
+                    request.requestMatchers("/api/auth/registry", "/api/auth/login").permitAll();
+                    request.requestMatchers("/api/admin/**").hasRole("ADMIN");
+                    request.requestMatchers("/api/user/**").hasAnyRole("ADMIN", "USER");
                     request.anyRequest().authenticated();
                 })
                 .addFilterBefore(this.jwtFilter, UsernamePasswordAuthenticationFilter.class)
