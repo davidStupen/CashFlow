@@ -45,6 +45,9 @@ public class SecurityService {
         if (checkImgName.isPresent()) {
             throw new UserException("The profile img name already exist " + user.getProfileImg());
         }
+        if ( ! user.getEmail().contains("@")){
+            throw new UserException("The email has to containing @");
+        }
         return false;
     }
     public ResponseEntity<?> saveUser(User user, MultipartFile img) throws UserException, IOException {
