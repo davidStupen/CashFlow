@@ -30,8 +30,9 @@ public class CashFlowService {private UserRepo userRepo;
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
         Category category = new Category(postCategAndTranDTO.category());
         category.setUser(user);
-        Transaction transaction = new Transaction(postCategAndTranDTO.desc(), postCategAndTranDTO.tran());
+        Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.tran());
         transaction.setUser(user);
+        transaction.setCategory(category);
         this.categoryRepo.save(category);
         this.transactionRepo.save(transaction);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -40,5 +41,6 @@ public class CashFlowService {private UserRepo userRepo;
     public ResponseEntity<?> findAllTranCat(int idUser) throws CashFlowException {
         User user = this.userRepo.findById(idUser)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

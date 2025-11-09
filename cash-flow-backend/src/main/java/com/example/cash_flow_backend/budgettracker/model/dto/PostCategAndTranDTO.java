@@ -5,6 +5,6 @@ import java.math.BigDecimal;
 public record PostCategAndTranDTO(
         String category,
         BigDecimal tran,
-        String desc
+        String description
 ) {
 }
