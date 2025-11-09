@@ -1,9 +1,8 @@
 package com.example.cash_flow_backend.budgettracker.controller;
 
 import com.example.cash_flow_backend.budgettracker.service.CashFlowService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -13,5 +12,9 @@ public class CashFlowController {
 
     public CashFlowController(CashFlowService cashFlowService) {
         this.cashFlowService = cashFlowService;
+    }
+    @PostMapping("/create")
+    public ResponseEntity<?> addNewItem(@RequestBody PostCategAndTranDTO postCategAndTranDTO, @PathVariable int idUser){
+        return this.cashFlowService.createCategTran(postCategAndTranDTO, idUser);
     }
 }
