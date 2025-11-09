@@ -30,13 +30,22 @@ public class CashFlowService {private UserRepo userRepo;
     public ResponseEntity<?> createCategTran(PostCategAndTranDTO postCategAndTranDTO, int idUser) throws CashFlowException, DataIntegrityViolationException {
         User user = this.userRepo.findById(idUser)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
-        Category category = new Category(postCategAndTranDTO.category());
-        category.setUser(user);
+        List<Category> categories = user.getCategories();
+        Category category = categories.stream()
+                .filter(item -> item.getCategory().trim().equalsIgnoreCase(postCategAndTranDTO.category().trim())).findFirst()
+                .orElse(null);
         Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.tran());
-        transaction.setUser(user);
-        transaction.setCategory(category);
-        this.categoryRepo.save(category);
-        this.transactionRepo.save(transaction);
+        if (category != null){
+            transaction.setCategory(category);
+            transaction.setUser(user);
+            this.transactionRepo.save(transaction);
+        } else {
+            Category category1 = new Category(postCategAndTranDTO.category());
+            category1.setUser(user);
+            transaction.setCategory(category1);
+            this.transactionRepo.save(transaction);
+            this.categoryRepo.save(category1);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
