@@ -16,7 +16,8 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String desc;
+    @Column(nullable = false, length = 55)
+    private String description;
     private BigDecimal tran;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -25,8 +26,8 @@ public class Transaction {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Transaction(String desc, BigDecimal tran) {
-        this.desc = desc;
+    public Transaction(String description, BigDecimal tran) {
+        this.description = description;
         this.tran = tran;
     }
 }

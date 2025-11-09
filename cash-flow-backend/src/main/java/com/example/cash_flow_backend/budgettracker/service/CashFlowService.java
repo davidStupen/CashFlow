@@ -3,7 +3,6 @@ package com.example.cash_flow_backend.budgettracker.service;
 import com.example.cash_flow_backend.budgettracker.exception.CashFlowException;
 import com.example.cash_flow_backend.budgettracker.model.Category;
 import com.example.cash_flow_backend.budgettracker.model.Transaction;
-import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.PostCategAndTranDTO;
 import com.example.cash_flow_backend.budgettracker.repository.CategoryRepo;
 import com.example.cash_flow_backend.budgettracker.repository.TransactionRepo;
@@ -14,9 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class CashFlowService {private UserRepo userRepo;
@@ -44,6 +40,5 @@ public class CashFlowService {private UserRepo userRepo;
     public ResponseEntity<?> findAllTranCat(int idUser) throws CashFlowException {
         User user = this.userRepo.findById(idUser)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
-
     }
 }

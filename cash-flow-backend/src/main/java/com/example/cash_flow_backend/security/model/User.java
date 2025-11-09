@@ -30,10 +30,8 @@ public class User {
     @Column(unique = true)
     private String profileImg;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(nullable = false, length = 55)
     private List<Transaction> transactions;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(nullable = false, length = 55)
     private List<Category> categories;
 
     public User(String username, String password, Role role, String email, String profileImg) {
