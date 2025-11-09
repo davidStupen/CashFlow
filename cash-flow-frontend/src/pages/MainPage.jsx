@@ -2,9 +2,11 @@ import { useEffect, useRef } from "react"
 import { jwtDecode } from "jwt-decode"
 import api from "../api"
 import { useState } from "react"
+import AddCatTran from "../componens/AddCatTran"
 
 const MainPage = () => {
   const userId = useRef(-1)
+  const [triger, setTriger] = useState(false)
   const [data, setData] = useState([])
   const [error, setError] = useState("")
   useEffect(() => {
@@ -25,15 +27,23 @@ const MainPage = () => {
       }
     }
     fetch()
-  }, [])
-
+  }, [triger])
+  const handlerTriger = () => {
+    if(triger){
+      setTriger(false)
+    } else{
+      setTriger(true)
+    }
+  }
   return(
     <div>
       <h1>Main page</h1>
       <div>
         <h1>Expense overview</h1>
+        <AddCatTran id={userId.current} tr={handlerTriger}/>
+        <p>{error}</p>
         {
-          data.map(item => <div key={item.catId}>
+          data.map(item => <div key={item.tranId}>
                             <p>Expense: {item.amount} category: {item.category}</p>
                             <hr />
                           </div>)
