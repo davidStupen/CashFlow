@@ -1,5 +1,7 @@
 package com.example.cash_flow_backend.security.model;
 
+import com.example.cash_flow_backend.budgettracker.model.Category;
+import com.example.cash_flow_backend.budgettracker.model.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
