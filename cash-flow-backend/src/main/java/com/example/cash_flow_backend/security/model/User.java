@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -25,6 +27,12 @@ public class User {
     private String email;
     @Column(unique = true)
     private String profileImg;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Column(nullable = false, length = 55)
+    private List<Transaction> transactions;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Column(nullable = false, length = 55)
+    private List<Category> categories;
 
     public User(String username, String password, Role role, String email, String profileImg) {
         this.username = username;
