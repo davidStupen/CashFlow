@@ -16,12 +16,17 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String desc;
     private BigDecimal tran;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    public Transaction(BigDecimal tran) {
+    public Transaction(String desc, BigDecimal tran) {
+        this.desc = desc;
         this.tran = tran;
     }
 }

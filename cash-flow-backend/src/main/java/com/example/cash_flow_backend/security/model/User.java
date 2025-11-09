@@ -29,10 +29,10 @@ public class User {
     private String email;
     @Column(unique = true)
     private String profileImg;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Column(nullable = false, length = 55)
     private List<Transaction> transactions;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Column(nullable = false, length = 55)
     private List<Category> categories;
 

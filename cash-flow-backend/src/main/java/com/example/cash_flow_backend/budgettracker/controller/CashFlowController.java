@@ -27,4 +27,12 @@ public class CashFlowController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/items/{idUser}")
+    public ResponseEntity<?> getAllItem(@PathVariable int idUser) {
+        try {
+            return this.cashFlowService.findAllTranCat(idUser);
+        } catch (CashFlowException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
