@@ -3,6 +3,7 @@ package com.example.cash_flow_backend.budgettracker.service;
 import com.example.cash_flow_backend.budgettracker.exception.CashFlowException;
 import com.example.cash_flow_backend.budgettracker.model.Category;
 import com.example.cash_flow_backend.budgettracker.model.Transaction;
+import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.PostCategAndTranDTO;
 import com.example.cash_flow_backend.budgettracker.repository.CategoryRepo;
 import com.example.cash_flow_backend.budgettracker.repository.TransactionRepo;
@@ -12,7 +13,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CashFlowService {private UserRepo userRepo;
@@ -37,10 +39,14 @@ public class CashFlowService {private UserRepo userRepo;
         this.transactionRepo.save(transaction);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @Transactional(readOnly = true)
+
     public ResponseEntity<?> findAllTranCat(int idUser) throws CashFlowException {
         User user = this.userRepo.findById(idUser)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Category> categories = user.getCategories();
+        List<GetCateTranDTO> getCateTranDTOS = categories.stream().flatMap(cat -> cat.getTransactions().stream()
+                .map(tran -> new GetCateTranDTO(tran.getId(), tran.getTran(), cat.getId(), cat.getCategory())))
+                .toList();
+        return new ResponseEntity<>(getCateTranDTOS, HttpStatus.OK);
     }
 }
