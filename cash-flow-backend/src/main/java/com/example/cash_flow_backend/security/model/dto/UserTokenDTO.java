@@ -4,6 +4,7 @@ import com.example.cash_flow_backend.security.model.Role;
 
 public record UserTokenDTO(
         String username,
-        Role role
+        Role role,
+        int userId
 ) {
 }

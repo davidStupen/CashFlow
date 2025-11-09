@@ -77,7 +77,7 @@ public class SecurityService {
                 .authenticate(new UsernamePasswordAuthenticationToken(postUserDTO.getUsername(), postUserDTO.getPassword()));
         Optional<User> findByUsername = this.userRepo.findByUsername(postUserDTO.getUsername());
         postUserDTO.setRole(findByUsername.get().getRole());
-        String token = this.jwtService.generateToken(new UserTokenDTO(postUserDTO.getUsername(), postUserDTO.getRole()));
+        String token = this.jwtService.generateToken(new UserTokenDTO(postUserDTO.getUsername(), postUserDTO.getRole(), findByUsername.get().getId()));
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 }
