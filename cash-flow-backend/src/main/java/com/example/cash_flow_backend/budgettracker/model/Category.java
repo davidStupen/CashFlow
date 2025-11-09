@@ -14,8 +14,13 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String category;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Category(String category) {
+        this.category = category;
+    }
 }
