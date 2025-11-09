@@ -43,8 +43,9 @@ public class CashFlowService {private UserRepo userRepo;
             Category category1 = new Category(postCategAndTranDTO.category());
             category1.setUser(user);
             transaction.setCategory(category1);
-            this.transactionRepo.save(transaction);
             this.categoryRepo.save(category1);
+            transaction.setUser(user);
+            this.transactionRepo.save(transaction);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
