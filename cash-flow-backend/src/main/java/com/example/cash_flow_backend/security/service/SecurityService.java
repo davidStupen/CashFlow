@@ -1,5 +1,6 @@
 package com.example.cash_flow_backend.security.service;
 
+import com.example.cash_flow_backend.budgettracker.service.EmailAndPDFService;
 import com.example.cash_flow_backend.security.exeption.UserException;
 import com.example.cash_flow_backend.security.model.Role;
 import com.example.cash_flow_backend.security.model.User;
@@ -30,13 +31,16 @@ public class SecurityService {
     private BCryptPasswordEncoder encoder;
     private JwtService jwtService;
     private UserRepo userRepo;
+    private EmailAndPDFService emailAndPDFService;
 
-    public SecurityService(AuthenticationManager authenticationManager, BCryptPasswordEncoder encoder, JwtService jwtService, UserRepo userRepo) {
+    public SecurityService(AuthenticationManager authenticationManager, BCryptPasswordEncoder encoder, JwtService jwtService, UserRepo userRepo, EmailAndPDFService emailAndPDFService) {
         this.authenticationManager = authenticationManager;
         this.encoder = encoder;
         this.jwtService = jwtService;
         this.userRepo = userRepo;
+        this.emailAndPDFService = emailAndPDFService;
     }
+
     private void wrongRequestException(PostUserDTO user) throws UserException {
         if (user.getUsername().isEmpty()){
             throw new UserException("Username is required");
@@ -51,7 +55,7 @@ public class SecurityService {
             throw new UserException("The email has to containing @");
         }
     }
-    public ResponseEntity<?> saveUser(PostUserDTO userDTO, MultipartFile img) throws UserException, IOException, DataIntegrityViolationException {
+    public ResponseEntity<?> saveUser(PostUserDTO userDTO, MultipartFile img) throws Exception {
         this.wrongRequestException(userDTO);
         userDTO.setRole(Role.ROLE_USER);
         userDTO.setPassword(this.encoder.encode(userDTO.getPassword()));
@@ -69,6 +73,7 @@ public class SecurityService {
             User user = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole(), userDTO.getEmail(), userDTO.getProfileImg());
             this.userRepo.save(user);
         }
+        this.emailAndPDFService.simpleSentEmail(userDTO.getEmail(), "Welcome", "Thank you for registering " + userDTO.getUsername());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

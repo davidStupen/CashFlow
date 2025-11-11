@@ -17,7 +17,6 @@ import java.io.IOException;
 @CrossOrigin(origins = "http://localhost:5173")
 public class SecurityController {
     private SecurityService securityService;
-
     public SecurityController(SecurityService securityService) {
         this.securityService = securityService;
     }
@@ -30,6 +29,8 @@ public class SecurityController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
             return new ResponseEntity<>("Failed to create file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return new ResponseEntity<>("email " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     @PostMapping("/login")
