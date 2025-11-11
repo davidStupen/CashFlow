@@ -8,18 +8,21 @@ import Logout from "../componens/Logout"
 import GetCategoryByUser from "../componens/GetCategoryByUser"
 
 const MainPage = () => {
-  const userId = useRef(-1)
+  const [userId, setUserId] = useState(-1)
   const [triger, setTriger] = useState(false)
   const [data, setData] = useState([])
   const [error, setError] = useState("")
   useEffect(() => {
     const decodeToken = jwtDecode(localStorage.getItem("token"))
-    userId.current = decodeToken.userId
+    setUserId(decodeToken.userId)
+  }, [])
+  useEffect(() => {
     const fetch = async () => {
-      if(userId.current > -1){
+      if(userId > -1){
         try{
-          const reponse = await api.get(`/api/cash/items/${userId.current}`)
+          const reponse = await api.get(`/api/cash/items/${userId}`)
           setData(reponse.data)
+          setError("")
         } catch(err){
           setError(err.response.data)
         }
@@ -28,7 +31,7 @@ const MainPage = () => {
       }
     }
     fetch()
-  }, [triger])
+  }, [userId, triger])
   const handlerTriger = () => {
     if(triger){
       setTriger(false)
@@ -42,8 +45,8 @@ const MainPage = () => {
         <Logout/>
         <h1>Expense overview</h1>
         <Rate/>
-        <AddCatTran id={userId.current} tr={handlerTriger}/>
-        <GetCategoryByUser id={userId.current} tr={handlerTriger}/>
+        <AddCatTran id={userId} tr={handlerTriger}/>
+        <GetCategoryByUser id={userId} tr={handlerTriger}/>
         <p>{error}</p>
         {
           data.map(item => <div key={item.tranId}>
