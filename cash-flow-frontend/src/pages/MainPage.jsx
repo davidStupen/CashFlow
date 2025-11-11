@@ -5,6 +5,7 @@ import { useState } from "react"
 import AddCatTran from "../componens/AddCatTran"
 import Rate from "../componens/Rate"
 import Logout from "../componens/Logout"
+import GetCategoryByUser from "../componens/GetCategoryByUser"
 
 const MainPage = () => {
   const userId = useRef(-1)
@@ -19,8 +20,6 @@ const MainPage = () => {
         try{
           const reponse = await api.get(`/api/cash/items/${userId.current}`)
           setData(reponse.data)
-          console.log(reponse.data)
-          console.log(userId.current)
         } catch(err){
           setError(err.response.data)
         }
@@ -39,16 +38,16 @@ const MainPage = () => {
   }
   return(
     <div>
-      <h1>Main page</h1>
       <div>
         <Logout/>
         <h1>Expense overview</h1>
         <Rate/>
         <AddCatTran id={userId.current} tr={handlerTriger}/>
+        <GetCategoryByUser id={userId.current} tr={handlerTriger}/>
         <p>{error}</p>
         {
           data.map(item => <div key={item.tranId}>
-                            <p>Expense: {item.amount} category: {item.category} datum: {item.date}</p>
+                            <p>Expense: {item.amount} category: {item.category} date: {item.date}</p>
                             <hr />
                           </div>)
         }

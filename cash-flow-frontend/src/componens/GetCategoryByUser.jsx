@@ -8,8 +8,9 @@ const GetCategoryByUser = (props) => {
   useEffect(() => {
     const fetch = async () => {
       try{
-        const response = await api.get(`/api/cash/categories/${props.id}`)
-        setCategoris(response.data)
+          const response = await api.get(`/api/cash/categories/${props.id}`)
+          setCategoris(response.data)
+          props.tr()
       } catch(err){
         if(err.response.status === 404){
           setError(err.response.data)
