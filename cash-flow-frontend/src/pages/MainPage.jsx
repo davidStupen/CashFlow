@@ -48,7 +48,7 @@ const MainPage = () => {
         <p>{error}</p>
         {
           data.map(item => <div key={item.tranId}>
-                            <p>Expense: {item.amount} category: {item.category}</p>
+                            <p>Expense: {item.amount} category: {item.category} datum: {new Date(item.date).toLocaleString()}</p>
                             <hr />
                           </div>)
         }
