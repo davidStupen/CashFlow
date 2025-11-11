@@ -67,5 +67,10 @@ public class CashFlowService {private UserRepo userRepo;
                 .toList();
         return new ResponseEntity<>(getCateTranDTOS, HttpStatus.OK);
     }
-
+    public ResponseEntity<?> getCategories(int idUser) throws CashFlowException {
+        User user = this.userRepo.findById(idUser)
+                .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
+        List<Category> categories = user.getCategories();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
 }

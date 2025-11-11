@@ -50,4 +50,12 @@ public class CashFlowController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/categories/{idUser}")
+    public ResponseEntity<?> getCategories(@PathVariable int idUser){
+        try {
+            return this.cashFlowService.getCategories(idUser);
+        } catch (CashFlowException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
