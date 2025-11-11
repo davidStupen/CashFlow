@@ -3,6 +3,8 @@ import { jwtDecode } from "jwt-decode"
 import api from "../api"
 import { useState } from "react"
 import AddCatTran from "../componens/AddCatTran"
+import Rate from "../componens/Rate"
+import Logout from "../componens/Logout"
 
 const MainPage = () => {
   const userId = useRef(-1)
@@ -39,7 +41,9 @@ const MainPage = () => {
     <div>
       <h1>Main page</h1>
       <div>
+        <Logout/>
         <h1>Expense overview</h1>
+        <Rate/>
         <AddCatTran id={userId.current} tr={handlerTriger}/>
         <p>{error}</p>
         {
