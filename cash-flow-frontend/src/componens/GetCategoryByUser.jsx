@@ -23,12 +23,12 @@ const GetCategoryByUser = (props) => {
   return(
     <div>
       <select onChange={e => setSelect(e.target.value)} value={select}>
+        <option value={0}>Select category for sorting</option>
         {
-          categoris.map(item => <div>
-                                  <option value={}></option>
-                                </div>)
+          categoris.map(item => <option value={item.id}>category: {item.category}</option>)
         }
       </select>
+      <p>{error}</p>
     </div>
   )
 }
