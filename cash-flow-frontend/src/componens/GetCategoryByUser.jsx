@@ -8,7 +8,7 @@ const GetCategoryByUser = (props) => {
     const fetch = async () => {
       try{
           if(props.id > -1){
-            const response = await api.get(`/api/cash/categories/${props.id}`)
+            const response = await api.get(`/api/cash/categories/${props.userId}`)
             setCategoris(response.data)
             setError("")
             props.tr()

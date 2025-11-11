@@ -46,7 +46,7 @@ const MainPage = () => {
         <h1>Expense overview</h1>
         <Rate/>
         <AddCatTran id={userId} tr={handlerTriger}/>
-        <GetCategoryByUser id={userId} tr={handlerTriger}/>
+        <GetCategoryByUser userId={userId} tr={handlerTriger}/>
         <p>{error}</p>
         {
           data.map(item => <div key={item.tranId}>
