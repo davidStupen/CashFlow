@@ -6,6 +6,7 @@ import com.example.cash_flow_backend.budgettracker.model.Transaction;
 import com.example.cash_flow_backend.budgettracker.model.dto.CategoryDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.PostCategAndTranDTO;
+import com.example.cash_flow_backend.budgettracker.model.dto.TransactionDTO;
 import com.example.cash_flow_backend.budgettracker.repository.CategoryRepo;
 import com.example.cash_flow_backend.budgettracker.repository.TransactionRepo;
 import com.example.cash_flow_backend.security.model.User;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 @Service
 public class CashFlowService {private UserRepo userRepo;
@@ -75,5 +77,13 @@ public class CashFlowService {private UserRepo userRepo;
         List<CategoryDTO> categoryDTOS = categories.stream()
                 .map(item -> new CategoryDTO(item.getId(), item.getCategory())).toList();
         return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
+    }
+    public ResponseEntity<?> getTransactionByCategoryId(int idCategory) throws CashFlowException {
+        Category category = this.categoryRepo.findById(idCategory)
+                .orElseThrow(() -> new CashFlowException("Category with ID: " + idCategory + " not find."));
+        List<Transaction> transactions = category.getTransactions();
+        List<TransactionDTO> transactionDTOS = transactions.stream()
+                .map(item -> new TransactionDTO(item.getDescription(), item.getTran(), item.getDate())).toList();
+        return new ResponseEntity<>(transactionDTOS, HttpStatus.OK);
     }
 }

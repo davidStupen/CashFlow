@@ -58,4 +58,12 @@ public class CashFlowController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/transactions-by-category/{idCategory}")
+    public ResponseEntity<?> getTransactionsByCategoryId(@PathVariable int idCategory){
+        try {
+            return this.cashFlowService.getTransactionByCategoryId(idCategory);
+        } catch (CashFlowException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
