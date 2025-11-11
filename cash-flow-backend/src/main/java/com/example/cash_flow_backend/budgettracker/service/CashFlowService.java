@@ -3,6 +3,7 @@ package com.example.cash_flow_backend.budgettracker.service;
 import com.example.cash_flow_backend.budgettracker.exception.CashFlowException;
 import com.example.cash_flow_backend.budgettracker.model.Category;
 import com.example.cash_flow_backend.budgettracker.model.Transaction;
+import com.example.cash_flow_backend.budgettracker.model.dto.CategoryDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.PostCategAndTranDTO;
 import com.example.cash_flow_backend.budgettracker.repository.CategoryRepo;
@@ -71,6 +72,8 @@ public class CashFlowService {private UserRepo userRepo;
         User user = this.userRepo.findById(idUser)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
         List<Category> categories = user.getCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        List<CategoryDTO> categoryDTOS = categories.stream()
+                .map(item -> new CategoryDTO(item.getId(), item.getCategory())).toList();
+        return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
     }
 }
