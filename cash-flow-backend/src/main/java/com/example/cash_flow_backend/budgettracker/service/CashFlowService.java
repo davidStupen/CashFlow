@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class CashFlowService {private UserRepo userRepo;
         Category category = categories.stream()
                 .filter(item -> item.getCategory().trim().equalsIgnoreCase(postCategAndTranDTO.category().trim())).findFirst()
                 .orElse(null);
-        Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.tran());
+        Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.tran(), new Date());
         if (category != null){
             transaction.setCategory(category);
             transaction.setUser(user);
@@ -55,7 +56,7 @@ public class CashFlowService {private UserRepo userRepo;
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
         List<Category> categories = user.getCategories();
         List<GetCateTranDTO> getCateTranDTOS = categories.stream().flatMap(cat -> cat.getTransactions().stream()
-                .map(tran -> new GetCateTranDTO(tran.getId(), tran.getTran(), cat.getId(), cat.getCategory())))
+                .map(tran -> new GetCateTranDTO(tran.getId(), tran.getTran(), tran.getDate(), cat.getId(), cat.getCategory())))
                 .toList();
         return new ResponseEntity<>(getCateTranDTOS, HttpStatus.OK);
     }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Data
@@ -19,6 +20,7 @@ public class Transaction {
     @Column(nullable = false, length = 55)
     private String description;
     private BigDecimal tran;
+    private Date date;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -26,8 +28,9 @@ public class Transaction {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Transaction(String description, BigDecimal tran) {
+    public Transaction(String description, BigDecimal tran, Date date) {
         this.description = description;
         this.tran = tran;
+        this.date = date;
     }
 }
