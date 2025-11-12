@@ -9,7 +9,7 @@ import GetCategoryByUser from "../componens/GetCategoryByUser"
 
 const MainPage = () => {
   const [userId, setUserId] = useState(-1)
-  const [triger, setTriger] = useState(false)
+  const [trigerAdd, setTrigerAdd] = useState(false)
   const [data, setData] = useState([])
   const [error, setError] = useState("")
   useEffect(() => {
@@ -31,12 +31,15 @@ const MainPage = () => {
       }
     }
     fetch()
-  }, [userId, triger])
-  const handlerTriger = () => {
-    if(triger){
-      setTriger(false)
+  }, [userId, trigerAdd])
+  const filterDataByCategory = (filterData) => {
+    setData(filterData)
+  }
+  const handlerTrigerAdd = () => {
+    if(trigerAdd){
+      setTrigerAdd(false)
     } else{
-      setTriger(true)
+      setTrigerAdd(true)
     }
   }
   return(
@@ -45,8 +48,8 @@ const MainPage = () => {
         <Logout/>
         <h1>Expense overview</h1>
         <Rate/>
-        <AddCatTran id={userId} tr={handlerTriger}/>
-        <GetCategoryByUser userId={userId} tr={handlerTriger}/>
+        <AddCatTran id={userId} tr={handlerTrigerAdd}/>
+        <GetCategoryByUser userId={userId} tr={handlerTrigerAdd} filterData={filterDataByCategory}/>
         <p>{error}</p>
         {
           data.map(item => <div key={item.tranId}>

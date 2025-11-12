@@ -2,7 +2,7 @@ import { useState } from "react"
 import api from "../api"
 
 const AddCatTran = (props) => {
-  const [data, setData] = useState({category:"", tran:0, description:""})
+  const [data, setData] = useState({category:"", amount:0, description:""})
   const [error, setError] = useState("")
   const handlerData = e => {
     const {name, value} = e.target
@@ -33,7 +33,7 @@ const AddCatTran = (props) => {
       <form onSubmit={handlerSubmit}>
         <input type="text" name="category" value={data.category} onChange={handlerData} placeholder="category"/>
         <input type="text" name="description" value={data.description} onChange={handlerData} placeholder="description"/>
-        <input type="number" name="tran" step={0.1} min={0} value={data.tran} onChange={handlerData}/>
+        <input type="number" name="amount" step={0.1} min={0} value={data.amount} onChange={handlerData}/>
         <input type="submit" value="ADD" />
       </form>
       <p>{error}</p>

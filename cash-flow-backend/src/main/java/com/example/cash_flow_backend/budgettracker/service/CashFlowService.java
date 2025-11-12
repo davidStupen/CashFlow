@@ -45,7 +45,7 @@ public class CashFlowService {private UserRepo userRepo;
         Category category = categories.stream()
                 .filter(item -> item.getCategory().trim().equalsIgnoreCase(postCategAndTranDTO.category().trim())).findFirst()
                 .orElse(null);
-        Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.tran(), this.formatedDate());
+        Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.amount(), this.formatedDate());
         if (category != null){
             transaction.setCategory(category);
             transaction.setUser(user);
@@ -66,7 +66,7 @@ public class CashFlowService {private UserRepo userRepo;
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
         List<Category> categories = user.getCategories();
         List<GetCateTranDTO> getCateTranDTOS = categories.stream().flatMap(cat -> cat.getTransactions().stream()
-                .map(tran -> new GetCateTranDTO(tran.getId(), tran.getTran(), tran.getDate(), cat.getId(), cat.getCategory())))
+                .map(tran -> new GetCateTranDTO(tran.getId(), tran.getAmount(), tran.getDate(), cat.getId(), cat.getCategory())))
                 .toList();
         return new ResponseEntity<>(getCateTranDTOS, HttpStatus.OK);
     }
@@ -83,7 +83,7 @@ public class CashFlowService {private UserRepo userRepo;
                 .orElseThrow(() -> new CashFlowException("Category with ID: " + idCategory + " not find."));
         List<Transaction> transactions = category.getTransactions();
         List<TransactionDTO> transactionDTOS = transactions.stream()
-                .map(item -> new TransactionDTO(item.getDescription(), item.getTran(), item.getDate())).toList();
+                .map(item -> new TransactionDTO(item.getDescription(), item.getAmount(), item.getDate(), item.getCategory().getCategory())).toList();
         return new ResponseEntity<>(transactionDTOS, HttpStatus.OK);
     }
 }

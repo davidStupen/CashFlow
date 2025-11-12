@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode"
 import api from "../api"
 import { useState, useRef, useEffect } from "react"
 const GetCategoryByUser = (props) => {
@@ -7,7 +8,7 @@ const GetCategoryByUser = (props) => {
   const sel = useRef()
     const fetch = async () => {
       try{
-          if(props.id > -1){
+        if (props.userId > -1 && select === -1){
             const response = await api.get(`/api/cash/categories/${props.userId}`)
             setCategoris(response.data)
             setError("")
@@ -22,12 +23,24 @@ const GetCategoryByUser = (props) => {
       }
     }
     useEffect(() => {
+      const fetch = async () => {
+        if (select > -1) {
+          const response = await api.get(`/api/cash/transactions-by-category/${select}`)
+          props.filterData(response.data)
+        } else{
+          const reponse = await api.get(`/api/cash/items/${jwtDecode(localStorage.getItem("token")).userId}`)
+          props.filterData(reponse.data)
+        }
+      }
+      fetch()
+    }, [select])
+    useEffect(() => {
       sel.current.addEventListener("click", fetch)
-    }, [props.id])
+    }, [props.userId, select])
   return(
     <div>
       <select ref={sel} onChange={e => setSelect(e.target.value)} value={select}>
-        <option value={-1}>Select category for sorting</option>
+        <option value={-1}>filtering by category</option>
         {
           categoris.map(item => <option value={item.id} key={item.id}>category: {item.category}</option>)
         }

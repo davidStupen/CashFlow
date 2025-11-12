@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public record TransactionDTO(
     String description,
-    BigDecimal tran,
-    String date
+    BigDecimal amount,
+    String date,
+    String category
 ) {
 }
