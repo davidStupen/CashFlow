@@ -98,7 +98,7 @@ public class CashFlowService {private UserRepo userRepo;
         if (user.getProfileImg() != null){
             String path = "data/profileImg/" + user.getProfileImg();
             byte[] bytesImg = Files.readAllBytes(new File(path).toPath());
-            String data = "data:" + "image/png" + ",base64;" + Base64.getEncoder().encodeToString(bytesImg);
+            String data = "data:" + "image/png" + ";base64," + Base64.getEncoder().encodeToString(bytesImg);
             return new ResponseEntity<>(data, HttpStatus.OK);
         }
         return new ResponseEntity<>("No profile picture set", HttpStatus.NOT_FOUND);
