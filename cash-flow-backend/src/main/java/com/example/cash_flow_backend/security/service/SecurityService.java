@@ -51,9 +51,6 @@ public class SecurityService {
         if (user.getPassword().isEmpty()){
             throw new UserException("Password is required");
         }
-        if ( ! user.getEmail().contains("@")){
-            throw new UserException("The email has to containing @");
-        }
     }
     public ResponseEntity<?> saveUser(PostUserDTO userDTO, MultipartFile img) throws Exception {
         this.wrongRequestException(userDTO);
