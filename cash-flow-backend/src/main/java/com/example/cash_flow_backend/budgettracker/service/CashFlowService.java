@@ -18,15 +18,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CancellationException;
 
 @Service
 public class CashFlowService {private UserRepo userRepo;
@@ -38,8 +35,7 @@ public class CashFlowService {private UserRepo userRepo;
         this.categoryRepo = categoryRepo;
         this.transactionRepo = transactionRepo;
     }
-    private String formatedDate(){
-        LocalDate date = LocalDate.now();
+    private String formatedDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return date.format(formatter);
     }
@@ -50,7 +46,7 @@ public class CashFlowService {private UserRepo userRepo;
         Category category = categories.stream()
                 .filter(item -> item.getCategory().trim().equalsIgnoreCase(postCategAndTranDTO.category().trim())).findFirst()
                 .orElse(null);
-        Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.amount(), this.formatedDate());
+        Transaction transaction = new Transaction(postCategAndTranDTO.description(), postCategAndTranDTO.amount(), this.formatedDate(LocalDate.now()));
         if (category != null){
             transaction.setCategory(category);
             transaction.setUser(user);
@@ -102,5 +98,23 @@ public class CashFlowService {private UserRepo userRepo;
             return new ResponseEntity<>(data, HttpStatus.OK);
         }
         return new ResponseEntity<>("No profile picture set", HttpStatus.NOT_FOUND);
+    }
+    public ResponseEntity<?> totalExpenses(int userId) throws CashFlowException {
+        //Prepared for growth
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new CashFlowException("User with ID: " + userId + " not find"));
+        List<Transaction> transactions = user.getTransactions();
+        if (transactions.isEmpty()){
+            return new ResponseEntity<>("no transactions yet", HttpStatus.NO_CONTENT);
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        List<BigDecimal> prices = transactions.stream()
+                .filter(item -> LocalDate.parse(item.getDate(), formatter).isAfter(LocalDate.now().minusDays(28)))
+                .map(item -> item.getAmount()).toList();
+        BigDecimal result = BigDecimal.ZERO;
+        for (BigDecimal pri : prices){
+            result = result.add(pri);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

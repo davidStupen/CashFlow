@@ -7,6 +7,7 @@ import Rate from "../componens/Rate"
 import Logout from "../componens/Logout"
 import GetCategoryByUser from "../componens/GetCategoryByUser"
 import ProfileImg from "../componens/ProfileImg"
+import Expenses from "../componens/Expenses"
 
 const MainPage = () => {
   const [userId, setUserId] = useState(-1)
@@ -52,6 +53,7 @@ const MainPage = () => {
         <Rate/>
         <AddCatTran id={userId} tr={handlerTrigerAdd}/>
         <GetCategoryByUser userId={userId} tr={handlerTrigerAdd} filterData={filterDataByCategory}/>
+        <Expenses userId={userId}/>
         <p>{error}</p>
         {
           data.map(item => <div key={item.tranId}>

@@ -78,4 +78,12 @@ public class CashFlowController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/expenses/{userId}")
+    public ResponseEntity<?> getExpenses(@PathVariable int userId){
+        try {
+            return this.cashFlowService.totalExpenses(userId);
+        } catch (CashFlowException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
