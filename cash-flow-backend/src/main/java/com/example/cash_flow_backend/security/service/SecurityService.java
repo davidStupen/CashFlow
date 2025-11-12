@@ -54,6 +54,7 @@ public class SecurityService {
     }
     public ResponseEntity<?> saveUser(PostUserDTO userDTO, MultipartFile img) throws Exception {
         this.wrongRequestException(userDTO);
+        this.emailAndPDFService.validationEmail(userDTO.getEmail());
         userDTO.setRole(Role.ROLE_USER);
         userDTO.setPassword(this.encoder.encode(userDTO.getPassword()));
         if (img != null){
