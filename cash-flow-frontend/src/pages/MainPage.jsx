@@ -6,6 +6,7 @@ import AddCatTran from "../componens/AddCatTran"
 import Rate from "../componens/Rate"
 import Logout from "../componens/Logout"
 import GetCategoryByUser from "../componens/GetCategoryByUser"
+import ProfileImg from "../componens/ProfileImg"
 
 const MainPage = () => {
   const [userId, setUserId] = useState(-1)
@@ -46,6 +47,7 @@ const MainPage = () => {
     <div>
       <div>
         <Logout/>
+        <ProfileImg userId={userId}/>
         <h1>Expense overview</h1>
         <Rate/>
         <AddCatTran id={userId} tr={handlerTrigerAdd}/>
