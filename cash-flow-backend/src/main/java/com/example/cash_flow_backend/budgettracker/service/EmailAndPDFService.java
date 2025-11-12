@@ -30,7 +30,7 @@ public class EmailAndPDFService {
 
         String[] splitEmailByAt = email.split("@");
         if (splitEmailByAt.length != 2){
-            throw new ValidationEmailException("Only one at symbol is allowed. You have " + splitEmailByAt.length);
+            throw new ValidationEmailException("Only one at symbol is allowed. You have " + (splitEmailByAt.length - 1));
         }
         if (splitEmailByAt[0].isEmpty() || splitEmailByAt[1].isEmpty()){
             throw new ValidationEmailException("Invalid email " + email);
