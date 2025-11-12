@@ -16,9 +16,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CancellationException;
@@ -85,5 +90,17 @@ public class CashFlowService {private UserRepo userRepo;
         List<TransactionDTO> transactionDTOS = transactions.stream()
                 .map(item -> new TransactionDTO(item.getDescription(), item.getAmount(), item.getDate(), item.getCategory().getCategory())).toList();
         return new ResponseEntity<>(transactionDTOS, HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> getProfileImgIfExist(int userId) throws CashFlowException, IOException {
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new CashFlowException("User with ID: " + userId + " not find"));
+        if (user.getProfileImg() != null){
+            String path = "data/profileImg/" + user.getProfileImg();
+            byte[] bytesImg = Files.readAllBytes(new File(path).toPath());
+            String data = "data:" + "image/png" + ",base64;" + Base64.getEncoder().encodeToString(bytesImg);
+            return new ResponseEntity<>(data, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("No profile picture set", HttpStatus.NOT_FOUND);
     }
 }

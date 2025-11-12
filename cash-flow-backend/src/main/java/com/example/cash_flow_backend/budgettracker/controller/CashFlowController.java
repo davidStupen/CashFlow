@@ -66,4 +66,8 @@ public class CashFlowController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/profile-img/{userId}")
+    public ResponseEntity<String> getProfileImg(@PathVariable int userId){
+        return this.cashFlowService.getProfileImgIfExist(userId);
+    }
 }
