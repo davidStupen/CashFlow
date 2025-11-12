@@ -19,7 +19,7 @@ const ProfileImg = (props) => {
   if(profile.length > 0){
     return(
       <div>
-        <img src={profile} alt="profile"/>
+        <img height={55} src={profile} alt="profile"/>
       </div>
     )
   }
