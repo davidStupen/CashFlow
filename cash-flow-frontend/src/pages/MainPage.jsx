@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { jwtDecode } from "jwt-decode"
 import api from "../api"
 import { useState } from "react"
@@ -8,15 +8,19 @@ import Logout from "../componens/Logout"
 import GetCategoryByUser from "../componens/GetCategoryByUser"
 import ProfileImg from "../componens/ProfileImg"
 import Expenses from "../componens/Expenses"
+import { useNavigate } from "react-router-dom"
 
 const MainPage = () => {
+  const navigate = useNavigate()
   const [userId, setUserId] = useState(-1)
   const [trigerAdd, setTrigerAdd] = useState(false)
   const [data, setData] = useState([])
   const [error, setError] = useState("")
+  const [role, setRole] = useState("")
   useEffect(() => {
     const decodeToken = jwtDecode(localStorage.getItem("token"))
     setUserId(decodeToken.userId)
+    setRole(decodeToken.role)
   }, [])
   useEffect(() => {
     const fetch = async () => {
@@ -62,6 +66,11 @@ const MainPage = () => {
                           </div>)
         }
       </div>
+      {
+        role === "ROLE_ADMIN" && (
+          <button onClick={() => navigate("/admin")}>Admin configuration</button>
+        )
+      }
     </div>
   )
 }
