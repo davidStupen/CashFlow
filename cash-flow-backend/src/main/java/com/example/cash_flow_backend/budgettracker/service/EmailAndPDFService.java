@@ -12,7 +12,7 @@ public class EmailAndPDFService {
     public EmailAndPDFService(JavaMailSender sender) {
         this.sender = sender;
     }
-    private void validationEmail(String email) throws ValidationEmailException {
+    public void validationEmail(String email) throws ValidationEmailException {
         if (email.length() < 6){
             throw new ValidationEmailException("Email is too short " + email);
         }
