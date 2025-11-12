@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/cash")
@@ -68,6 +70,12 @@ public class CashFlowController {
     }
     @GetMapping("/profile-img/{userId}")
     public ResponseEntity<String> getProfileImg(@PathVariable int userId){
-        return this.cashFlowService.getProfileImgIfExist(userId);
+        try {
+            return this.cashFlowService.getProfileImgIfExist(userId);
+        } catch (CashFlowException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IOException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
