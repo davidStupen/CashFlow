@@ -1,0 +1,59 @@
+@use "mixin" as m;
+@use "veriables" as v;
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: rgb(255, 244, 244);
+}
+.login-controller-main{
+    @include m.flex-default();
+    height: 100vh;
+    .login-form {
+            @include m.form-box(5px solid v.$main-color)
+        } 
+}
+.btn{
+    @include m.btn-style(v.$main-color);
+    &:hover{
+        background-color: #d835d8;
+        transition: .5s;
+    }
+}
+.input{
+    @include m.input-box(v.$main-color);
+    &::placeholder{
+        color: rgb(97, 92, 92);
+    }
+}
+.move-password {
+    @include m.move-margin(5px 0px 5px 19px);
+}
+.move-email{
+    @include m.move-margin(5px 0px 5px 65px);
+}
+.li{
+    @include m.highlight();
+}
+.registre-controller-main{
+    @extend .login-controller-main;
+    .registry-form{
+        @extend .login-form;
+        .input{
+            border-radius: 8px;
+            color: white;
+        }
+        .file {
+            @include m.file-box();
+            margin-left: 20%;
+            &:hover{
+                background-color: #d835d8;
+                transition: .5s;
+            }
+        }
+    }
+}

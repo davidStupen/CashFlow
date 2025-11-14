@@ -24,13 +24,20 @@ const Login = () => {
     }
   }
   return(
-    <div>
-      <form onSubmit={handlerSubmit}>
-        <input type="text" name="username" value={login.username} placeholder="username" onChange={handlerLogin}/>
-        <input type="password" name="password" value={login.password} onChange={handlerLogin}/>
-        <input type="submit" value="Sign in"/>
+    <div className="login-controller-main">
+      <h1>Login</h1>
+      <form onSubmit={handlerSubmit} className="login-form">
+        <div className="username-container">
+          <label htmlFor="username">username:</label>
+          <input className="input" type="text" id="username" name="username" value={login.username} placeholder="username" onChange={handlerLogin} />
+        </div>
+        <div className="password-container">
+          <label htmlFor="password">password:</label>
+          <input className="input move-password" type="password" name="password" id="password" value={login.password} onChange={handlerLogin} placeholder="password"/>
+        </div>
+        <input type="submit" value="Sign in" className="btn"/>
       </form>
-      <p>Don"t have an account yet? You can sign up <Link to={"/registry"}><li>here</li></Link>.</p>
+      <p>Don"t have an account yet? You can sign up <Link to={"/registry"}><li className="li">here</li></Link>.</p>
       <h3>{error}</h3>
     </div>
   )

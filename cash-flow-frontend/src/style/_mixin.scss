@@ -1,0 +1,54 @@
+@mixin flex-default{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+@mixin form-box($border:5px solid black){
+    border: $border;
+    margin: 15px;
+    padding: 5px 10px;
+    font-size: 25px;
+    border-radius: 15px;
+    background-color: rgb(218, 218, 218);
+    box-shadow: 5px 5px rgba(133, 22, 133, 0.224);
+}
+@mixin btn-style($color: black){
+    margin: 5px 42%;
+    padding: 5px 10px;
+    font-size: 15px;
+    background-color: $color;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+}
+@mixin input-box($color: black){
+    background-color: $color;
+    padding: 5px;
+    width: 250px;
+    color: black;
+    font-size: 25px;
+    margin: 5px 15px;
+    letter-spacing: 1.5px;
+    padding-left: 2px;
+}
+@mixin move-margin($size){
+    margin: $size;
+}
+@mixin highlight{
+    display: inline;
+    font-weight: 900;
+    font-size: 20px;
+}
+@mixin file-box{
+    width: 250px;
+    height: 50px;
+    background-color: #a824c9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 15px;
+    cursor: pointer;
+}
