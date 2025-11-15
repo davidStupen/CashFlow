@@ -18,7 +18,7 @@ const Rate = () => {
     fetch()
   }, [])
   return(
-    <div>
+    <div className="rate">
       <p>1 EUR = {rate} CZK</p>
       <p>{error}</p>
     </div>

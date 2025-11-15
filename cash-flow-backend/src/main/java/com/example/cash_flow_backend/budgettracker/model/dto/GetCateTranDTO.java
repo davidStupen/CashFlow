@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 public record GetCateTranDTO(
         int tranId,
         BigDecimal amount,
+        String description,
         String date,
         int catId,
         String category

@@ -16,7 +16,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false, length = 55)
+    @Column(nullable = false, length = 9)
     private String category;
     @ManyToOne
     @JoinColumn(name = "user_id")

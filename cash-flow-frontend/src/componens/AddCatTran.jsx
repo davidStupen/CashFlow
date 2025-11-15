@@ -29,12 +29,13 @@ const AddCatTran = (props) => {
     }
   }
   return(
-    <div>
-      <form onSubmit={handlerSubmit}>
-        <input type="text" name="category" value={data.category} onChange={handlerData} placeholder="category"/>
-        <input type="text" name="description" value={data.description} onChange={handlerData} placeholder="description"/>
-        <input type="number" name="amount" step={0.1} min={0} value={data.amount} onChange={handlerData}/>
-        <input type="submit" value="ADD" />
+    <div className="border-class">
+      <h2>new transaction</h2>
+      <form onSubmit={handlerSubmit} className="form">
+        <input className="input" type="text" name="category" value={data.category} onChange={handlerData} placeholder="category"/>
+        <input className="input" type="text" name="description" value={data.description} onChange={handlerData} placeholder="description"/>
+        <input className="input" type="number" name="amount" step={0.1} min={0} value={data.amount} onChange={handlerData}/>
+        <input type="submit" value="ADD" className="btn"/>
       </form>
       <p>{error}</p>
     </div>

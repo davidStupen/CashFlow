@@ -16,7 +16,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false, length = 55)
+    @Column(nullable = false, length = 15)
     private String description;
     private BigDecimal amount;
     @Column(nullable = false, length = 13)

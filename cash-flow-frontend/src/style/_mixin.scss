@@ -13,10 +13,11 @@
     background-color: rgb(218, 218, 218);
     box-shadow: 5px 5px rgba(133, 22, 133, 0.224);
 }
-@mixin btn-style($color: black){
-    margin: 5px 42%;
+@mixin btn-style($color: black, $width:55px){
+    margin: 5px auto;
     padding: 5px 10px;
     font-size: 15px;
+    width: $width;
     background-color: $color;
     cursor: pointer;
     color: white;
@@ -32,6 +33,8 @@
     margin: 5px 15px;
     letter-spacing: 1.5px;
     padding-left: 2px;
+    font-weight: bold;
+    padding-left: 5px;
 }
 @mixin move-margin($size){
     margin: $size;
@@ -51,4 +54,19 @@
     font-size: 22px;
     border-radius: 15px;
     cursor: pointer;
+}
+@mixin background-img{
+    background-image: url("../assets/bills.png");
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: .5;
+}
+@mixin text($size:25px){
+    font-size: $size;
+    color: white;
+    @if $size > 40 {
+        text-align: center;
+        border-bottom: 5px solid purple;
+    }
 }

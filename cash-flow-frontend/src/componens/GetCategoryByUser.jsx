@@ -38,8 +38,8 @@ const GetCategoryByUser = (props) => {
       sel.current.addEventListener("click", fetch)
     }, [props.userId, select])
   return(
-    <div>
-      <select ref={sel} onChange={e => setSelect(e.target.value)} value={select}>
+    <div >
+      <select ref={sel} onChange={e => setSelect(e.target.value)} value={select} className="roll">
         <option value={-1}>filtering by category</option>
         {
           categoris.map(item => <option value={item.id} key={item.id}>category: {item.category}</option>)

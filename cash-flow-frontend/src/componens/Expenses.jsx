@@ -7,9 +7,11 @@ const Expenses = (props) => {
   useEffect(() => {
     const fetch = async () => {
       try{
-        const response = await api.get(`/api/cash/expenses/${props.userId}`)
-        setExpenses(response.data)
-        setError("")
+        if(props.userId > -1){
+          const response = await api.get(`/api/cash/expenses/${props.userId}`)
+          setExpenses(response.data)
+          setError("")
+        }
       } catch(err){
         if(err.response.status === 404){
           setError(err.response.data)
@@ -21,8 +23,8 @@ const Expenses = (props) => {
     fetch()
   }, [props.userId])
   return(
-    <div>
-      <p>{expenses} KČ.</p>
+    <div className="expenses">
+      <p>total expenses for the last 28 days = {expenses} KČ.</p>
       <p>{error}</p>
     </div>
   )

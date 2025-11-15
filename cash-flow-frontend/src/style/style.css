@@ -17,7 +17,7 @@ body {
   height: 100vh;
 }
 .login-controller-main .login-form, .registre-controller-main .login-form, .registre-controller-main .registry-form {
-  border: 5px solid #a624ce;
+  border: 5px solid #6e0b8c;
   margin: 15px;
   padding: 5px 10px;
   font-size: 25px;
@@ -27,10 +27,11 @@ body {
 }
 
 .btn {
-  margin: 5px 42%;
+  margin: 5px auto;
   padding: 5px 10px;
   font-size: 15px;
-  background-color: #a624ce;
+  width: 100px;
+  background-color: #6e0b8c;
   cursor: pointer;
   color: white;
   font-weight: bold;
@@ -42,7 +43,7 @@ body {
 }
 
 .input {
-  background-color: #a624ce;
+  background-color: #6e0b8c;
   padding: 5px;
   width: 250px;
   color: black;
@@ -50,6 +51,8 @@ body {
   margin: 5px 15px;
   letter-spacing: 1.5px;
   padding-left: 2px;
+  font-weight: bold;
+  padding-left: 5px;
 }
 .input::-moz-placeholder {
   color: rgb(97, 92, 92);
@@ -91,4 +94,105 @@ body {
 .registre-controller-main .registry-form .file:hover {
   background-color: #d835d8;
   transition: 0.5s;
+}
+
+.main-container-mainPage {
+  background-image: url("../assets/bills.png");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+}
+
+.black-screen {
+  background-color: black;
+  opacity: 0.85;
+  height: 100vh;
+  width: 90%;
+  padding: 10px;
+}
+
+.new-btn-style, .roll, .logout {
+  background-color: #6e0b8c;
+  color: white;
+  padding: 5px 15px;
+  font-size: 23px;
+  border-radius: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.new-btn-style:hover, .roll:hover, .logout:hover {
+  background-color: #d835d8;
+  transition: 0.5s;
+}
+
+.border-class {
+  border: 5px solid orange;
+  background-color: blue;
+  margin: 5px;
+  border-radius: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.border-class h2 {
+  margin: 5px;
+  text-align: center;
+  color: white;
+}
+.border-class .input {
+  color: white;
+}
+
+.gg {
+  display: flex;
+  justify-content: space-evenly;
+  max-width: 1100px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.heading {
+  font-size: 55px;
+  color: white;
+  text-align: center;
+  border-bottom: 5px solid purple;
+}
+
+.rate, .expenses, .info {
+  font-size: 20px;
+  color: white;
+}
+.rate p, .expenses p, .info p {
+  margin: 8px 0;
+  text-align: left;
+}
+
+.info {
+  min-width: 400px;
+  height: 220px;
+  border: 3px solid orange;
+  padding: 5px;
+  overflow-y: auto;
+}
+.info p {
+  text-align: left;
+  border-bottom: 3px dotted orange;
+}
+.info p span {
+  color: red;
+  font-weight: bold;
+}
+
+.display-row {
+  display: flex;
+  -moz-column-gap: 5px;
+       column-gap: 5px;
 }/*# sourceMappingURL=style.css.map */

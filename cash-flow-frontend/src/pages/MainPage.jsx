@@ -49,28 +49,37 @@ const MainPage = () => {
     }
   }
   return(
-    <div>
-      <div>
-        <Logout/>
-        <ProfileImg userId={userId}/>
-        <h1>Expense overview</h1>
-        <Rate/>
-        <AddCatTran id={userId} tr={handlerTrigerAdd}/>
-        <GetCategoryByUser userId={userId} tr={handlerTrigerAdd} filterData={filterDataByCategory}/>
-        <Expenses userId={userId}/>
-        <p>{error}</p>
-        {
-          data.map(item => <div key={item.tranId}>
-                            <p>Expense: {item.amount} category: {item.category} date: {item.date}</p>
-                            <hr />
-                          </div>)
-        }
+    <div className="main-container-mainPage">
+      <div className="black-screen">
+        <div className="display-row">
+          <Logout />
+          {
+            role === "ROLE_ADMIN" && (
+              <button onClick={() => navigate("/admin")} className="new-btn-style">Admin configuration</button>
+            )
+          }
+          <ProfileImg userId={userId} />
+        </div>
+          <h1 className="heading">Expense overview</h1>
+          <Rate />
+          <div className="gg">
+            <div>
+              <AddCatTran id={userId} tr={handlerTrigerAdd} />
+            </div>
+            <div>
+              <GetCategoryByUser userId={userId} tr={handlerTrigerAdd} filterData={filterDataByCategory} />
+              <Expenses userId={userId} />
+              <p>{error}</p>
+              <div className="info">
+                {
+                  data.map(item => <div key={item.tranId}>
+                    <p><span>Expense:</span> {item.amount} <span>category:</span> {item.category} <span>date:</span> {item.date} <span>des:</span> {item.description}</p>
+                  </div>)
+                }
+              </div>
+            </div>
+          </div>
       </div>
-      {
-        role === "ROLE_ADMIN" && (
-          <button onClick={() => navigate("/admin")}>Admin configuration</button>
-        )
-      }
     </div>
   )
 }

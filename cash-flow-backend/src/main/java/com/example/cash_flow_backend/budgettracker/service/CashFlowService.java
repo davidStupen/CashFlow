@@ -67,7 +67,7 @@ public class CashFlowService {private UserRepo userRepo;
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
         List<Category> categories = user.getCategories();
         List<GetCateTranDTO> getCateTranDTOS = categories.stream().flatMap(cat -> cat.getTransactions().stream()
-                .map(tran -> new GetCateTranDTO(tran.getId(), tran.getAmount(), tran.getDate(), cat.getId(), cat.getCategory())))
+                .map(tran -> new GetCateTranDTO(tran.getId(), tran.getAmount(), tran.getDescription(), tran.getDate(), cat.getId(), cat.getCategory())))
                 .toList();
         return new ResponseEntity<>(getCateTranDTOS, HttpStatus.OK);
     }
