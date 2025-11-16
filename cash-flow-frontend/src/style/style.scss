@@ -163,3 +163,35 @@ body{
     @extend .heading;
     color: black;
 }
+.admin-page{
+    @extend .gg;
+    span{
+        color: blue;
+        font-weight: bold;
+    }
+    p{
+        margin-top: 3px;
+    }
+    border: 3px solid orange;
+    border-radius: 30%;
+    background-color: gray;
+    margin-top: 5px;
+}
+.main-container-admin{
+    border: 5px solid v.$main-color;
+    width: 850px;
+    height: 300px;
+    border-radius: 15px;
+    background-image: url("../assets/bills.png");
+    background-size: cover;
+    overflow-y: auto;
+}
+.nn{
+    display: flex;
+    justify-content: center;
+}
+.delete-btn{
+    @extend .new-btn-style;
+    height: 30px;
+    font-size: 15px;
+}

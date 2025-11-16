@@ -114,7 +114,7 @@ body {
   padding: 10px;
 }
 
-.new-btn-style, .roll, .logout {
+.new-btn-style, .delete-btn, .roll, .logout {
   background-color: #6e0b8c;
   color: white;
   padding: 5px 15px;
@@ -125,7 +125,7 @@ body {
   list-style: none;
   cursor: pointer;
 }
-.new-btn-style:hover, .roll:hover, .logout:hover {
+.new-btn-style:hover, .delete-btn:hover, .roll:hover, .logout:hover {
   background-color: #d835d8;
   transition: 0.5s;
 }
@@ -149,7 +149,7 @@ body {
   color: white;
 }
 
-.gg {
+.gg, .admin-page {
   display: flex;
   justify-content: space-evenly;
   max-width: 1100px;
@@ -211,4 +211,38 @@ body {
 
 .chart-heading {
   color: black;
+}
+
+.admin-page {
+  border: 3px solid orange;
+  border-radius: 30%;
+  background-color: gray;
+  margin-top: 5px;
+}
+.admin-page span {
+  color: blue;
+  font-weight: bold;
+}
+.admin-page p {
+  margin-top: 3px;
+}
+
+.main-container-admin {
+  border: 5px solid #6e0b8c;
+  width: 850px;
+  height: 300px;
+  border-radius: 15px;
+  background-image: url("../assets/bills.png");
+  background-size: cover;
+  overflow-y: auto;
+}
+
+.nn {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-btn {
+  height: 30px;
+  font-size: 15px;
 }/*# sourceMappingURL=style.css.map */
