@@ -3,10 +3,7 @@ package com.example.cash_flow_backend.budgettracker.service;
 import com.example.cash_flow_backend.budgettracker.exception.CashFlowException;
 import com.example.cash_flow_backend.budgettracker.model.Category;
 import com.example.cash_flow_backend.budgettracker.model.Transaction;
-import com.example.cash_flow_backend.budgettracker.model.dto.CategoryDTO;
-import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
-import com.example.cash_flow_backend.budgettracker.model.dto.PostCategAndTranDTO;
-import com.example.cash_flow_backend.budgettracker.model.dto.TransactionDTO;
+import com.example.cash_flow_backend.budgettracker.model.dto.*;
 import com.example.cash_flow_backend.budgettracker.repository.CategoryRepo;
 import com.example.cash_flow_backend.budgettracker.repository.TransactionRepo;
 import com.example.cash_flow_backend.security.model.User;
@@ -23,7 +20,9 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CashFlowService {private UserRepo userRepo;
@@ -116,5 +115,28 @@ public class CashFlowService {private UserRepo userRepo;
             result = result.add(pri);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    public ResponseEntity<?> getDataForChart(int userId) throws CashFlowException {
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new CashFlowException("User with ID: " + userId + " not find"));
+        List<Transaction> transactions = user.getTransactions();
+        List<TransactionChartDTO> chartDTOS = transactions.stream()
+                .map(item -> new TransactionChartDTO(item.getDate(), item.getAmount())).toList();
+        Map<String, BigDecimal> values = new HashMap<>();
+        String data;
+        BigDecimal amount = BigDecimal.ZERO;
+        for (int i = 0; i < chartDTOS.size(); i++) {
+            data = chartDTOS.get(i).date();
+            for (int j = 0; j < chartDTOS.size(); j++) {
+                if (data.equals(chartDTOS.get(j).date())){
+                    amount = amount.add(chartDTOS.get(j).amount());
+                }
+            }
+            values.put(data, amount);
+            amount = BigDecimal.ZERO;
+        }
+        List<TransactionChartDTO> chartDTOS1 = values.entrySet().stream()
+                .map(item ->new TransactionChartDTO(item.getKey(), item.getValue())).toList();
+        return new ResponseEntity<>(chartDTOS1, HttpStatus.OK);
     }
 }
