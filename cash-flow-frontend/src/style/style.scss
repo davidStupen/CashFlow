@@ -76,6 +76,8 @@ body{
     font-size: 23px;
     border-radius: 15px;
     font-weight: bold;
+    text-decoration: none;
+    list-style: none;
     cursor: pointer;
     &:hover {
             background-color: #d835d8;
@@ -148,4 +150,16 @@ body{
 .display-row{
     display: flex;
     column-gap: 5px;
+}
+.char-container{
+    width: 500px;
+    height: 500px;
+}
+.main-chart-container{
+    display: flex;
+    justify-content: center;
+}
+.chart-heading{
+    @extend .heading;
+    color: black;
 }

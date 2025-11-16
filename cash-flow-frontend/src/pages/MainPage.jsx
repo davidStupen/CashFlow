@@ -8,7 +8,7 @@ import Logout from "../componens/Logout"
 import GetCategoryByUser from "../componens/GetCategoryByUser"
 import ProfileImg from "../componens/ProfileImg"
 import Expenses from "../componens/Expenses"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const MainPage = () => {
   const navigate = useNavigate()
@@ -53,6 +53,7 @@ const MainPage = () => {
       <div className="black-screen">
         <div className="display-row">
           <Logout />
+          <Link to={`/chart/${userId}`}><li className="new-btn-style">Chart</li></Link>
           {
             role === "ROLE_ADMIN" && (
               <button onClick={() => navigate("/admin")} className="new-btn-style">Admin configuration</button>

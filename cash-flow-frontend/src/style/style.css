@@ -121,6 +121,8 @@ body {
   font-size: 23px;
   border-radius: 15px;
   font-weight: bold;
+  text-decoration: none;
+  list-style: none;
   cursor: pointer;
 }
 .new-btn-style:hover, .roll:hover, .logout:hover {
@@ -159,7 +161,7 @@ body {
   flex-direction: column;
 }
 
-.heading {
+.heading, .chart-heading {
   font-size: 55px;
   color: white;
   text-align: center;
@@ -195,4 +197,18 @@ body {
   display: flex;
   -moz-column-gap: 5px;
        column-gap: 5px;
+}
+
+.char-container {
+  width: 500px;
+  height: 500px;
+}
+
+.main-chart-container {
+  display: flex;
+  justify-content: center;
+}
+
+.chart-heading {
+  color: black;
 }/*# sourceMappingURL=style.css.map */
