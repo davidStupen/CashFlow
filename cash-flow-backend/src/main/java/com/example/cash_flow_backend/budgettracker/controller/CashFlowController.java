@@ -87,7 +87,11 @@ public class CashFlowController {
         }
     }
     @GetMapping("/chart/{idUser}")
-    public ResponseEntity<?> getDataForChart(@PathVariable int idUser) throws CashFlowException {
-        return this.cashFlowService.getDataForChart(idUser);
+    public ResponseEntity<?> getDataForChart(@PathVariable int idUser) {
+        try {
+            return this.cashFlowService.getDataForChart(idUser);
+        } catch (CashFlowException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

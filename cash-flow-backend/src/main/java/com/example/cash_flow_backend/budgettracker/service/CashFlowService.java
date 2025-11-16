@@ -120,6 +120,9 @@ public class CashFlowService {private UserRepo userRepo;
         User user = this.userRepo.findById(userId)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + userId + " not find"));
         List<Transaction> transactions = user.getTransactions();
+        if (transactions.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         List<TransactionChartDTO> chartDTOS = transactions.stream()
                 .map(item -> new TransactionChartDTO(item.getDate(), item.getAmount())).toList();
         Map<String, BigDecimal> values = new HashMap<>();
