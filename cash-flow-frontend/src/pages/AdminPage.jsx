@@ -4,6 +4,7 @@ import api from "../api"
 const AdminPage = () => {
   const [users, setUsers] = useState([])
   const [noContent, setNoContent] = useState("")
+  const [error, setError] = useState("")
   useEffect(() => {
     const fetch = async () => {
       const response = await api.get("/api/admin/users")
@@ -16,6 +17,19 @@ const AdminPage = () => {
     }
     fetch()
   }, [])
+  const deleteUser = async (userId) => {
+    const result = users.filter(item => item.id !== userId)
+    setUsers(result)
+    try{
+      await api.delete(`/api/admin/user?userId=${userId}`)
+    } catch(err){
+      if(err.response.status === 404){
+        setError("user not find.")
+      } else{
+        console.error(err)
+      }
+    }
+  }
   return(
     <div className="main-container">
       <h1 className="chart-heading">Admin page</h1>
@@ -25,7 +39,7 @@ const AdminPage = () => {
           {
             users.map(item => <div key={item.id} className="admin-page">
               <p><span>username: </span> {item.username}, <span>role:</span> {item.role}, <span>email:</span> {item.email}</p>
-              <button className="delete-btn">Delete</button>
+              <button className="delete-btn" onClick={() => deleteUser(item.id)}>Delete</button>
             </div>)
           }
         </div>

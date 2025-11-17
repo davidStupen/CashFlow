@@ -107,8 +107,7 @@ body {
 }
 
 .black-screen {
-  background-color: black;
-  opacity: 0.85;
+  background-color: rgba(26, 24, 24, 0.8);
   height: 100vh;
   width: 90%;
   padding: 10px;
@@ -218,19 +217,21 @@ body {
   border-radius: 30%;
   background-color: gray;
   margin-top: 5px;
+  height: 50px;
 }
 .admin-page span {
   color: blue;
   font-weight: bold;
 }
 .admin-page p {
-  margin-top: 3px;
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 .main-container-admin {
   border: 5px solid #6e0b8c;
   width: 850px;
-  height: 300px;
+  height: 60vh;
   border-radius: 15px;
   background-image: url("../assets/bills.png");
   background-size: cover;
@@ -245,4 +246,5 @@ body {
 .delete-btn {
   height: 30px;
   font-size: 15px;
+  margin-top: 7.5px;
 }/*# sourceMappingURL=style.css.map */

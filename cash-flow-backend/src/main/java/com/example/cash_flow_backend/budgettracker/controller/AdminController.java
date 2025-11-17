@@ -4,10 +4,7 @@ import com.example.cash_flow_backend.budgettracker.model.dto.UserDTO;
 import com.example.cash_flow_backend.budgettracker.service.AdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,13 @@ public class AdminController {
             return new ResponseEntity<>(userDTOS, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @DeleteMapping("/user")
+    public ResponseEntity<?> deleteUser(@RequestParam int userId){
+        UserDTO userDTO = this.adminService.deleteUserById(userId);
+        if (userDTO == null){
+            return new ResponseEntity<>("user not find", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 }

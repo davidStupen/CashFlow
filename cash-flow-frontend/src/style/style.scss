@@ -63,8 +63,7 @@ body{
     justify-content: center;
 }
 .black-screen{
-    background-color: black;
-    opacity: .85;
+    background-color: rgba($color: #1a1818, $alpha: .8);
     height: 100vh;
     width: 90%;
     padding: 10px;
@@ -170,17 +169,19 @@ body{
         font-weight: bold;
     }
     p{
-        margin-top: 3px;
+        margin-top: 10px;
+        font-size: 20px;
     }
     border: 3px solid orange;
-    border-radius: 30%;
+    border-radius: 30%; 
     background-color: gray;
     margin-top: 5px;
+    height: 50px;
 }
 .main-container-admin{
     border: 5px solid v.$main-color;
     width: 850px;
-    height: 300px;
+    height: 60vh;
     border-radius: 15px;
     background-image: url("../assets/bills.png");
     background-size: cover;
@@ -194,4 +195,5 @@ body{
     @extend .new-btn-style;
     height: 30px;
     font-size: 15px;
+    margin-top: 7.5px;
 }
