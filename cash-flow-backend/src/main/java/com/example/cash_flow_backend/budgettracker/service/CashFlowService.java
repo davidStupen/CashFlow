@@ -8,6 +8,7 @@ import com.example.cash_flow_backend.budgettracker.repository.CategoryRepo;
 import com.example.cash_flow_backend.budgettracker.repository.TransactionRepo;
 import com.example.cash_flow_backend.security.model.User;
 import com.example.cash_flow_backend.security.repository.UserRepo;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +26,19 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CashFlowService {private UserRepo userRepo;
+public class CashFlowService {
+    private UserRepo userRepo;
     private CategoryRepo categoryRepo;
     private TransactionRepo transactionRepo;
+    private EmailAndPDFService emailAndPDFService;
 
-    public CashFlowService(UserRepo userRepo, CategoryRepo categoryRepo, TransactionRepo transactionRepo) {
+    public CashFlowService(UserRepo userRepo, CategoryRepo categoryRepo, TransactionRepo transactionRepo, EmailAndPDFService emailAndPDFService) {
         this.userRepo = userRepo;
         this.categoryRepo = categoryRepo;
         this.transactionRepo = transactionRepo;
+        this.emailAndPDFService = emailAndPDFService;
     }
+
     private String formatedDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return date.format(formatter);
@@ -61,13 +66,17 @@ public class CashFlowService {private UserRepo userRepo;
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findAllTranCat(int idUser) throws CashFlowException {
+    public ResponseEntity<?> findAllTranCat(int idUser, boolean isPDF, HttpServletResponse response) throws CashFlowException, IOException {
         User user = this.userRepo.findById(idUser)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
         List<Category> categories = user.getCategories();
         List<GetCateTranDTO> getCateTranDTOS = categories.stream().flatMap(cat -> cat.getTransactions().stream()
                 .map(tran -> new GetCateTranDTO(tran.getId(), tran.getAmount(), tran.getDescription(), tran.getDate(), cat.getId(), cat.getCategory())))
                 .toList();
+        if (isPDF){
+            this.emailAndPDFService.pdfDocument(response, getCateTranDTOS);
+            return new ResponseEntity<>("pdf created", HttpStatus.OK);
+        }
         return new ResponseEntity<>(getCateTranDTOS, HttpStatus.OK);
     }
     public ResponseEntity<?> getCategories(int idUser) throws CashFlowException {

@@ -5,6 +5,7 @@ import com.example.cash_flow_backend.budgettracker.model.dto.PostCategAndTranDTO
 import com.example.cash_flow_backend.budgettracker.service.ApiService;
 import com.example.cash_flow_backend.budgettracker.service.CashFlowService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,11 +36,13 @@ public class CashFlowController {
         }
     }
     @GetMapping("/items/{idUser}")
-    public ResponseEntity<?> getAllItem(@PathVariable int idUser) {
+    public ResponseEntity<?> getAllItem(@PathVariable int idUser, @RequestParam(required = false, defaultValue = "false", name = "pdf") boolean isPDF, HttpServletResponse response) {
         try {
-            return this.cashFlowService.findAllTranCat(idUser);
+            return this.cashFlowService.findAllTranCat(idUser, isPDF, response);
         } catch (CashFlowException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("/rate")
