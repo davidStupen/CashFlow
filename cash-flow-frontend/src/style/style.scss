@@ -63,7 +63,7 @@ body{
     justify-content: center;
 }
 .black-screen{
-    background-color: rgba($color: #1a1818, $alpha: .8);
+    background-color: rgba($color: #3b2e2e, $alpha: .8);
     height: 100vh;
     width: 90%;
     padding: 10px;
@@ -133,12 +133,13 @@ body{
     height: 220px;
     border: 3px solid orange;
     padding: 5px;
+    border-radius: 5px;
     overflow-y: auto;
     p{
         text-align: left;
         border-bottom: 3px dotted orange;
         span{
-            color: red;
+            color: orange;
             font-weight: bold;
         }
     }
@@ -165,7 +166,7 @@ body{
 .admin-page{
     @extend .gg;
     span{
-        color: blue;
+        color: orange;
         font-weight: bold;
     }
     p{

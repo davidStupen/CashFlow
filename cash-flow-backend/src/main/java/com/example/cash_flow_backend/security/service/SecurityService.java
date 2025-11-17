@@ -52,10 +52,12 @@ public class SecurityService {
             throw new UserException("Password is required");
         }
     }
-    public ResponseEntity<?> saveUser(PostUserDTO userDTO, MultipartFile img) throws Exception {
+    public ResponseEntity<?> registry(PostUserDTO userDTO, MultipartFile img) throws Exception {
         this.wrongRequestException(userDTO);
         this.emailAndPDFService.validationEmail(userDTO.getEmail());
-        userDTO.setRole(Role.ROLE_USER);
+        if (userDTO.getRole() == null){
+            userDTO.setRole(Role.ROLE_USER);
+        }
         userDTO.setPassword(this.encoder.encode(userDTO.getPassword()));
         if (img != null){
             String storageName = StringUtils.cleanPath(Objects.requireNonNull(img.getOriginalFilename()));
@@ -71,7 +73,7 @@ public class SecurityService {
             User user = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole(), userDTO.getEmail(), userDTO.getProfileImg());
             this.userRepo.save(user);
         }
-        this.emailAndPDFService.simpleSentEmail(userDTO.getEmail(), "Welcome", "Thank you for registering " + userDTO.getUsername());
+        this.emailAndPDFService.simpleSentEmail(userDTO.getEmail(), "Welcome " + userDTO.getUsername(), "Thank you for registering.");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

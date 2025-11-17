@@ -107,7 +107,7 @@ body {
 }
 
 .black-screen {
-  background-color: rgba(26, 24, 24, 0.8);
+  background-color: rgba(59, 46, 46, 0.8);
   height: 100vh;
   width: 90%;
   padding: 10px;
@@ -181,6 +181,7 @@ body {
   height: 220px;
   border: 3px solid orange;
   padding: 5px;
+  border-radius: 5px;
   overflow-y: auto;
 }
 .info p {
@@ -188,7 +189,7 @@ body {
   border-bottom: 3px dotted orange;
 }
 .info p span {
-  color: red;
+  color: orange;
   font-weight: bold;
 }
 
@@ -220,7 +221,7 @@ body {
   height: 50px;
 }
 .admin-page span {
-  color: blue;
+  color: orange;
   font-weight: bold;
 }
 .admin-page p {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import api from "../api"
+import RegistryAdmin from "../componens/RegistryAdmin"
 
 const AdminPage = () => {
   const [users, setUsers] = useState([])
@@ -44,6 +45,7 @@ const AdminPage = () => {
           }
         </div>
       </div>
+      <RegistryAdmin/>
     </div>
   )
 }
