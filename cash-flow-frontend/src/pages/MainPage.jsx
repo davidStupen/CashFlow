@@ -9,6 +9,7 @@ import GetCategoryByUser from "../componens/GetCategoryByUser"
 import ProfileImg from "../componens/ProfileImg"
 import Expenses from "../componens/Expenses"
 import { Link, useNavigate } from "react-router-dom"
+import PDF from "../componens/PDF"
 
 const MainPage = () => {
   const navigate = useNavigate()
@@ -54,6 +55,7 @@ const MainPage = () => {
         <div className="display-row">
           <Logout />
           <Link to={`/chart/${userId}`}><li className="new-btn-style">Chart</li></Link>
+          <PDF userId={userId} />
           {
             role === "ROLE_ADMIN" && (
               <button onClick={() => navigate("/admin")} className="new-btn-style">Admin configuration</button>
