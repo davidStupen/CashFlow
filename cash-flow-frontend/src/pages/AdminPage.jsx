@@ -44,8 +44,8 @@ const AdminPage = () => {
             </div>)
           }
         </div>
+        <RegistryAdmin />
       </div>
-      <RegistryAdmin/>
     </div>
   )
 }

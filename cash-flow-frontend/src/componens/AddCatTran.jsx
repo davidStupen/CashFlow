@@ -37,7 +37,7 @@ const AddCatTran = (props) => {
         <input className="input" type="number" name="amount" step={0.1} min={0} value={data.amount} onChange={handlerData}/>
         <input type="submit" value="ADD" className="btn"/>
       </form>
-      <p>{error}</p>
+      <p className="error">{error}</p>
     </div>
   )
 }

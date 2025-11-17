@@ -43,9 +43,18 @@ public class CashFlowService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return date.format(formatter);
     }
+    private void checkNewCatTran(PostCategAndTranDTO newCatPost) throws CashFlowException {
+        if (newCatPost.amount().doubleValue() <= 0){
+            throw new CashFlowException("The price must be positive.");
+        }
+        if (newCatPost.category().isEmpty() || newCatPost.description().isEmpty()){
+            throw new CashFlowException("The category or description is required.");
+        }
+    }
     public ResponseEntity<?> createCategTran(PostCategAndTranDTO postCategAndTranDTO, int idUser) throws CashFlowException, DataIntegrityViolationException {
+        this.checkNewCatTran(postCategAndTranDTO);
         User user = this.userRepo.findById(idUser)
-                .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find"));
+                .orElseThrow(() -> new CashFlowException("User with ID: " + idUser + " not find."));
         List<Category> categories = user.getCategories();
         Category category = categories.stream()
                 .filter(item -> item.getCategory().trim().equalsIgnoreCase(postCategAndTranDTO.category().trim())).findFirst()

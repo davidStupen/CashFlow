@@ -72,7 +72,7 @@ const MainPage = () => {
             <div>
               <GetCategoryByUser userId={userId} tr={handlerTrigerAdd} filterData={filterDataByCategory} />
               <Expenses userId={userId} />
-              <p>{error}</p>
+            <p className="error">{error}</p>
               <div className="info">
                 {
                   data.map(item => <div key={item.tranId}>

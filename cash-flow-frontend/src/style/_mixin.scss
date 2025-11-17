@@ -70,3 +70,9 @@
         border-bottom: 5px solid purple;
     }
 }
+@mixin error($color: black){
+    color: $color;
+    background-color: yellow;
+    font-size: 15px;
+    font-weight: bold;
+}
