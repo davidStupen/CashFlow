@@ -9,6 +9,11 @@ import com.example.cash_flow_backend.security.model.User;
 import com.example.cash_flow_backend.security.repository.UserRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -30,7 +35,7 @@ public class AdminService {
                 .map(item -> new UserDTO(item.getId(), item.getUsername(), item.getRole().toString().substring(5), item.getEmail())).toList();
     }
 
-    public UserDTO deleteUserById(int userId) {
+    public UserDTO deleteUserById(int userId) throws IOException {
         User user = this.userRepo.findById(userId).orElse(null);
         if (user == null){
             return null;
@@ -40,6 +45,10 @@ public class AdminService {
         transactions.forEach(item -> this.transactionRepo.delete(item));
         categories.forEach(item -> this.categoryRepo.delete(item));
         this.userRepo.delete(user);
+         if (user.getProfileImg() != null){
+             Path path = Paths.get("data/profileImg/" + user.getProfileImg());
+             Files.deleteIfExists(path);
+         }
         return new UserDTO(user.getId(), user.getUsername(), user.getRole().toString(), user.getEmail());
     }
 }
