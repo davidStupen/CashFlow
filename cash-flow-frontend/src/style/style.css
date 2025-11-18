@@ -254,6 +254,37 @@ body {
 .error {
   color: black;
   background-color: yellow;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.registry-form-admin {
+  border: 5px solid purple;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 15px;
+  background-color: blue;
+}
+.registry-form-admin input {
+  font-size: 15px;
+  background-color: black;
+  color: whitesmoke;
+  padding: 2px;
+}
+.registry-form-admin input::-moz-placeholder {
+  color: aliceblue;
+  opacity: 0.8;
+}
+.registry-form-admin input::placeholder {
+  color: aliceblue;
+  opacity: 0.8;
+}
+.registry-form-admin .new-btn-style, .registry-form-admin .logout, .registry-form-admin .roll, .registry-form-admin .delete-btn {
+  background-color: #6e0b8c;
+}
+.registry-form-admin .new-btn-style:hover, .registry-form-admin .logout:hover, .registry-form-admin .roll:hover, .registry-form-admin .delete-btn:hover {
+  background-color: #d835d8;
+  transition: 0.5s;
 }/*# sourceMappingURL=style.css.map */

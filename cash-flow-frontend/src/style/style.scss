@@ -202,3 +202,27 @@ body{
 .error{
     @include m.error();
 }
+.registry-form-admin{
+    border: 5px solid purple;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 15px;
+    background-color: blue;
+    input{
+        font-size: 15px;
+        background-color: black;
+        color: whitesmoke;
+        padding: 2px;
+        &::placeholder{
+            color: aliceblue;
+            opacity: .8;
+        }
+    }
+    .new-btn-style{
+        background-color: v.$main-color;
+        &:hover{
+            background-color: #d835d8;
+            transition: .5s;
+        }
+    }
+}
