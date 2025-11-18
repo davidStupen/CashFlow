@@ -18,6 +18,7 @@ const MainPage = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState("")
   const [role, setRole] = useState("")
+  const [categoryId, setCategoryID] = useState(-1)
   useEffect(() => {
     const decodeToken = jwtDecode(localStorage.getItem("token"))
     setUserId(decodeToken.userId)

@@ -13,7 +13,6 @@ const PDF = (props) => {
       console.error(err)
     }
 }
-
   return (
     <div>
       <button className="new-btn-style" onClick={pdfDom}>PDF</button>
