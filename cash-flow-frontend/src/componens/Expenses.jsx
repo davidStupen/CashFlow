@@ -8,7 +8,7 @@ const Expenses = (props) => {
     const fetch = async () => {
       try{
         if(props.userId > -1){
-          const response = await api.get(`/api/cash/expenses/${props.userId}`)
+          const response = await api.get(`/api/cash/expenses/${props.userId}?idC=${props.idCategory}`)
           setExpenses(response.data)
           setError("")
         }
@@ -21,7 +21,7 @@ const Expenses = (props) => {
       }
     }
     fetch()
-  }, [props.userId])
+  }, [props.userId, props.idCategory])
   return(
     <div className="expenses">
       <p>total expenses for the last 28 days = {expenses} KČ.</p>

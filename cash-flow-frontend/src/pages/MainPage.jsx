@@ -18,7 +18,6 @@ const MainPage = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState("")
   const [role, setRole] = useState("")
-  const [categoryId, setCategoryID] = useState(-1)
   useEffect(() => {
     const decodeToken = jwtDecode(localStorage.getItem("token"))
     setUserId(decodeToken.userId)
@@ -71,8 +70,7 @@ const MainPage = () => {
               <AddCatTran id={userId} tr={handlerTrigerAdd} />
             </div>
             <div>
-              <GetCategoryByUser userId={userId} tr={handlerTrigerAdd} filterData={filterDataByCategory} />
-              <Expenses userId={userId} />
+              <GetCategoryByUser userId={userId} tr={handlerTrigerAdd} filterData={filterDataByCategory}/>
             <p className="error">{error}</p>
               <div className="info">
                 {

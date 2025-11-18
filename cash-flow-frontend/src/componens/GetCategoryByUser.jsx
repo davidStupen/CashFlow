@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode"
 import api from "../api"
 import { useState, useRef, useEffect } from "react"
+import Expenses from "./Expenses"
 const GetCategoryByUser = (props) => {
   const [categoris, setCategoris] = useState([])
   const [select, setSelect] = useState(-1)
@@ -45,6 +46,7 @@ const GetCategoryByUser = (props) => {
           categoris.map(item => <option value={item.id} key={item.id}>category: {item.category}</option>)
         }
       </select>
+      <Expenses userId={props.userId} idCategory={select}/>
       <p>{error}</p>
     </div>
   )

@@ -82,9 +82,9 @@ public class CashFlowController {
         }
     }
     @GetMapping("/expenses/{userId}")
-    public ResponseEntity<?> getExpenses(@PathVariable int userId){
+    public ResponseEntity<?> getExpenses(@PathVariable int userId, @RequestParam int idC){
         try {
-            return this.cashFlowService.totalExpenses(userId);
+            return this.cashFlowService.totalExpenses(userId, idC);
         } catch (CashFlowException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

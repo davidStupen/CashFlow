@@ -20,10 +20,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CashFlowService {
@@ -116,8 +113,7 @@ public class CashFlowService {
         }
         return new ResponseEntity<>("No profile picture set", HttpStatus.NOT_FOUND);
     }
-    public ResponseEntity<?> totalExpenses(int userId) throws CashFlowException {
-        //Prepared for growth
+    public ResponseEntity<?> totalExpenses(int userId, int idCategory) throws CashFlowException {
         User user = this.userRepo.findById(userId)
                 .orElseThrow(() -> new CashFlowException("User with ID: " + userId + " not find"));
         List<Transaction> transactions = user.getTransactions();
@@ -125,9 +121,21 @@ public class CashFlowService {
             return new ResponseEntity<>("no transactions yet", HttpStatus.NO_CONTENT);
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        List<BigDecimal> prices = transactions.stream()
-                .filter(item -> LocalDate.parse(item.getDate(), formatter).isAfter(LocalDate.now().minusDays(28)))
-                .map(item -> item.getAmount()).toList();
+        List<BigDecimal> prices = new ArrayList<>();
+        if (idCategory == -1){
+            transactions.stream()
+                    .filter(item -> LocalDate.parse(item.getDate(), formatter).isAfter(LocalDate.now().minusDays(28)))
+                    .map(item -> item.getAmount())
+                    .forEach(item -> prices.add(item));
+        } else {
+            transactions.clear();
+            Category category = this.categoryRepo.findById(idCategory).orElseThrow(() -> new CashFlowException("id category is not find " + idCategory));
+            transactions.addAll(category.getTransactions());
+            transactions.stream()
+                    .filter(item -> LocalDate.parse(item.getDate(), formatter).isAfter(LocalDate.now().minusDays(28)))
+                    .map(item -> item.getAmount())
+                    .forEach(item -> prices.add(item));
+        }
         BigDecimal result = BigDecimal.ZERO;
         for (BigDecimal pri : prices){
             result = result.add(pri);
