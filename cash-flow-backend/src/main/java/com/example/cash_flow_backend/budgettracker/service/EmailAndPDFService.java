@@ -59,6 +59,14 @@ public class EmailAndPDFService {
         PdfWriter.getInstance(document, response.getOutputStream());
         document.open();
         Font font = FontFactory.getFont(FontFactory.HELVETICA, 15);
+        Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 28);
+        fontTitle.setColor(128,0,128);
+        Paragraph title = new Paragraph("""
+                Expense overview
+                
+                """, fontTitle);
+        title.setAlignment(Element.ALIGN_CENTER);
+        document.add(title);
         for (GetCateTranDTO data : dataForPdf){
             String res = data.date() + ": " + data.category() + " -> " + data.description() + ", " + data.amount() + "Kc.";
             Paragraph paragraph = new Paragraph(res, font);
