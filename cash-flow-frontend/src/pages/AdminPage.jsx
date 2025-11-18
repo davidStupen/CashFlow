@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import api from "../api"
 import RegistryAdmin from "../componens/RegistryAdmin"
+import { useNavigate } from "react-router-dom"
 
 const AdminPage = () => {
+  const navigate = useNavigate()
   const [users, setUsers] = useState([])
   const [noContent, setNoContent] = useState("")
   const [error, setError] = useState("")
@@ -31,6 +33,9 @@ const AdminPage = () => {
       }
     }
   }
+  const detailsUser = (userId) => {
+    navigate(`/detailsUser?id=${userId}`)
+  }
   return(
     <div className="main-container">
       <h1 className="chart-heading">Admin page</h1>
@@ -39,7 +44,9 @@ const AdminPage = () => {
         <div className="main-container-admin">
           {
             users.map(item => <div key={item.id} className="admin-page">
-              <p><span>username: </span> {item.username}, <span>role:</span> {item.role}, <span>email:</span> {item.email}</p>
+              <p><button className="btn-details" onClick={() => detailsUser(item.id)}>username:</button> {item.username}, 
+              <button className="btn-details" onClick={() => detailsUser(item.id)}>role:</button> {item.role}, 
+              <button className="btn-details" onClick={() => detailsUser(item.id)}>email:</button> {item.email}</p>
               <button className="delete-btn" onClick={() => deleteUser(item.id)}>Delete</button>
             </div>)
           }

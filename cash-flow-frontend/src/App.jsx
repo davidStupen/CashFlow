@@ -4,6 +4,7 @@ import Registry from "./pages/Registry"
 import MainPage from "./pages/MainPage"
 import AdminPage from "./pages/AdminPage"
 import ChartPage from "./pages/ChartPage"
+import UserDetails from "./pages/UserDetails"
 
 function App() {
   return(
@@ -14,6 +15,7 @@ function App() {
         <Route path="/main" element={<MainPage/>}/>
         <Route path="/admin" element={<AdminPage/>}/>
         <Route path="/chart/:userId" element={<ChartPage/>}/>
+        <Route path="/detailsUser" element={<UserDetails/>}/>
       </Routes>
     </div>
   )

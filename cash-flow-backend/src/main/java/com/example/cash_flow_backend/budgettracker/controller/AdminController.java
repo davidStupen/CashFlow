@@ -1,5 +1,6 @@
 package com.example.cash_flow_backend.budgettracker.controller;
 
+import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.UserDTO;
 import com.example.cash_flow_backend.budgettracker.service.AdminService;
 import org.springframework.http.HttpStatus;
@@ -39,5 +40,13 @@ public class AdminController {
             return new ResponseEntity<>("user not find", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+    @GetMapping("/details/{idUser}")
+    public ResponseEntity<?> getDetails(@PathVariable int idUser){
+        List<GetCateTranDTO> getCateTranDTOS = this.adminService.getAllData(idUser);
+        if (getCateTranDTOS == null){
+            return new ResponseEntity<>("user not find", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(getCateTranDTOS, HttpStatus.OK);
     }
 }

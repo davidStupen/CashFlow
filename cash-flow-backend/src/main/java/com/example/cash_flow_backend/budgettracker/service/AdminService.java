@@ -2,6 +2,7 @@ package com.example.cash_flow_backend.budgettracker.service;
 
 import com.example.cash_flow_backend.budgettracker.model.Category;
 import com.example.cash_flow_backend.budgettracker.model.Transaction;
+import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
 import com.example.cash_flow_backend.budgettracker.model.dto.UserDTO;
 import com.example.cash_flow_backend.budgettracker.repository.CategoryRepo;
 import com.example.cash_flow_backend.budgettracker.repository.TransactionRepo;
@@ -50,5 +51,16 @@ public class AdminService {
              Files.deleteIfExists(path);
          }
         return new UserDTO(user.getId(), user.getUsername(), user.getRole().toString(), user.getEmail());
+    }
+    public List<GetCateTranDTO> getAllData(int userId){
+        User user = this.userRepo.findById(userId).orElse(null);
+        if (user == null){
+            return null;
+        }
+        List<Category> categories = user.getCategories();
+        return categories.stream()
+                .flatMap(cat -> cat.getTransactions().stream()
+                        .map(tran -> new GetCateTranDTO(tran.getId(), tran.getAmount(), tran.getDescription(), tran.getDate(), cat.getId(), cat.getCategory())))
+                .toList();
     }
 }
