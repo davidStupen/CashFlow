@@ -38,6 +38,7 @@ const AdminPage = () => {
   }
   return(
     <div className="main-container">
+      <button className="new-btn-style" onClick={() => navigate("/main")}>Home page</button>
       <h1 className="chart-heading">Admin page</h1>
       <p>{noContent}</p>
       <div className="nn">

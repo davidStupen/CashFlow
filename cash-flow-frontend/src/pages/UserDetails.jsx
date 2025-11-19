@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import api from "../api"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 const UserDetails = () => {
+  const navigate = useNavigate()
   const [data, setData] = useState([])
   const [param] = useSearchParams()
   useEffect(() => {
@@ -15,6 +16,8 @@ const UserDetails = () => {
   }, [])
   return(
     <div className="main-container">
+      <button className="new-btn-style" onClick={() => navigate("/main")}>home page</button>
+      <button className="new-btn-style" onClick={() => navigate("/admin")}>Admin configuration</button>
       <h1 className="chart-heading">User details</h1>
       <div className="container-map">
         {
