@@ -54,7 +54,9 @@ const MainPage = () => {
       <div className="black-screen">
         <div className="display-row">
           <Logout />
-          <Link to={`/chart/${userId}`}><li className="new-btn-style">Chart</li></Link>
+          <button className="new-btn-style" onClick={() => navigate
+          ("/chart")
+          }>Chart</button>
           <PDF userId={userId} />
           {
             role === "ROLE_ADMIN" && (

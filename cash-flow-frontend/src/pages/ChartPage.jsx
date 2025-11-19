@@ -2,13 +2,16 @@ import {Chart as ChartJS, defaults} from "chart.js/auto"
 import {Line} from "react-chartjs-2"
 import { useEffect, useState } from "react"
 import api from "../api"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { jwtDecode } from "jwt-decode"
 const ChartPage = () => {
   const navigate = useNavigate()
-  const {userId} = useParams()
+  const token = localStorage.getItem("token")
+  const userId = jwtDecode(token).userId
   const [backendData, setBackendData] = useState([])
   useEffect(() => {
     const feth = async () => {
+      console.log(userId)
       if(userId > -1){
         try{
           const response = await api.get(`/api/cash/chart/${userId}`)
@@ -19,7 +22,7 @@ const ChartPage = () => {
       }
     }
     feth()
-  }, [userId])
+  }, [])
   if(backendData.length > 0){
     return (
       <div className="main-chart-container">

@@ -14,7 +14,7 @@ function App() {
         <Route path="/registry" element={<Registry/>}/>
         <Route path="/main" element={<MainPage/>}/>
         <Route path="/admin" element={<AdminPage/>}/>
-        <Route path="/chart/:userId" element={<ChartPage/>}/>
+        <Route path="/chart" element={<ChartPage/>}/>
         <Route path="/detailsUser" element={<UserDetails/>}/>
       </Routes>
     </div>
