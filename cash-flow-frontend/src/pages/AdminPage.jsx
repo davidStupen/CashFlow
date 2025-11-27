@@ -36,6 +36,9 @@ const AdminPage = () => {
   const detailsUser = (userId) => {
     navigate(`/detailsUser?id=${userId}`)
   }
+  const email = userId => {
+    navigate(`/email?id=${userId}`)
+  }
   return(
     <div className="main-container">
       <button className="new-btn-style" onClick={() => navigate("/main")}>Home page</button>
@@ -47,7 +50,7 @@ const AdminPage = () => {
             users.map(item => <div key={item.id} className="admin-page">
               <p><button className="btn-details" onClick={() => detailsUser(item.id)}>username:</button> {item.username}, 
               <button className="btn-details" onClick={() => detailsUser(item.id)}>role:</button> {item.role}, 
-              <button className="btn-details" onClick={() => detailsUser(item.id)}>email:</button> {item.email}</p>
+              <button className="btn-details" onClick={() => email(item.id)}>email:</button> {item.email}</p>
               <button className="delete-btn" onClick={() => deleteUser(item.id)}>Delete</button>
             </div>)
           }

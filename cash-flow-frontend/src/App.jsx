@@ -5,6 +5,7 @@ import MainPage from "./pages/MainPage"
 import AdminPage from "./pages/AdminPage"
 import ChartPage from "./pages/ChartPage"
 import UserDetails from "./pages/UserDetails"
+import Email from "./pages/Email"
 
 function App() {
   return(
@@ -16,6 +17,7 @@ function App() {
         <Route path="/admin" element={<AdminPage/>}/>
         <Route path="/chart" element={<ChartPage/>}/>
         <Route path="/detailsUser" element={<UserDetails/>}/>
+        <Route path="/email" element={<Email/>}/>
       </Routes>
     </div>
   )

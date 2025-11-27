@@ -1,5 +1,6 @@
 package com.example.cash_flow_backend.budgettracker.service;
 
+import com.example.cash_flow_backend.budgettracker.exception.CashFlowException;
 import com.example.cash_flow_backend.budgettracker.model.Category;
 import com.example.cash_flow_backend.budgettracker.model.Transaction;
 import com.example.cash_flow_backend.budgettracker.model.dto.GetCateTranDTO;
@@ -22,11 +23,13 @@ public class AdminService {
     private UserRepo userRepo;
     private CategoryRepo categoryRepo;
     private TransactionRepo transactionRepo;
+    private EmailAndPDFService emailAndPDFService;
 
-    public AdminService(UserRepo userRepo, CategoryRepo categoryRepo, TransactionRepo transactionRepo) {
+    public AdminService(UserRepo userRepo, CategoryRepo categoryRepo, TransactionRepo transactionRepo, EmailAndPDFService emailAndPDFService) {
         this.userRepo = userRepo;
         this.categoryRepo = categoryRepo;
         this.transactionRepo = transactionRepo;
+        this.emailAndPDFService = emailAndPDFService;
     }
 
     @GetMapping("/users")
@@ -62,5 +65,14 @@ public class AdminService {
                 .flatMap(cat -> cat.getTransactions().stream()
                         .map(tran -> new GetCateTranDTO(tran.getId(), tran.getAmount(), tran.getDescription(), tran.getDate(), cat.getId(), cat.getCategory())))
                 .toList();
+    }
+
+    public void sendEmailToUser(int idUser, String input) throws Exception {
+        if (idUser == -1){
+            throw new CashFlowException("The error occurred on the frontend with id" + idUser);
+        }
+        User user = this.userRepo.findById(idUser).orElseThrow(() -> new CashFlowException("user is no find"));
+        this.emailAndPDFService
+                .simpleSentEmail(user.getEmail(), "Company name", input);
     }
 }
