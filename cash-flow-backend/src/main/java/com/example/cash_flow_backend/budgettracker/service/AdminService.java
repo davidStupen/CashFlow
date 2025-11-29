@@ -75,4 +75,10 @@ public class AdminService {
         this.emailAndPDFService
                 .simpleSentEmail(user.getEmail(), "Company name", input);
     }
+    public List<UserDTO> searchByUsername(String username) throws CashFlowException {
+        List<User> users = this.userRepo.findByUsernameContaining(username)
+                .orElseThrow(() -> new CashFlowException("user not exists"));
+        return users.stream()
+                .map(item -> new UserDTO(item.getId(), item.getUsername(), item.getRole().toString().substring(5), item.getEmail())).toList();
+    }
 }

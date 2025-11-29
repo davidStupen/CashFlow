@@ -259,3 +259,7 @@ body{
         }
     }
 }
+.input-search{
+    @extend .input;
+    height: 25px;
+}

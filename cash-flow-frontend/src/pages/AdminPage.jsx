@@ -8,8 +8,9 @@ const AdminPage = () => {
   const [users, setUsers] = useState([])
   const [noContent, setNoContent] = useState("")
   const [error, setError] = useState("")
+  const [sreachInput, setSreachInput] = useState("")
   useEffect(() => {
-    const fetch = async () => {
+    const fetchAll = async () => {
       const response = await api.get("/api/admin/users")
       if(response.status === 200){
         setUsers(response.data)
@@ -18,8 +19,18 @@ const AdminPage = () => {
         setNoContent("no content")
       }
     }
-    fetch()
-  }, [])
+    const sreachByUsername = async () => {
+      const response = await api.post("/api/admin/search-by-username", sreachInput, {
+        headers:{"Content-Type": "text/plain"}
+      })
+      setUsers(response.data)
+    }
+    if(sreachInput.length < 2){
+      fetchAll()
+    } else{
+      sreachByUsername()
+    }
+  }, [sreachInput])
   const deleteUser = async (userId) => {
     const result = users.filter(item => item.id !== userId)
     setUsers(result)
@@ -45,6 +56,7 @@ const AdminPage = () => {
       <h1 className="chart-heading">Admin page</h1>
       <p>{noContent}</p>
       <div className="nn">
+        <input type="text" className="input-search" placeholder="sreaching by username" onChange={e => setSreachInput(e.target.value)} value={sreachInput} name="sreachInput"/>
         <div className="main-container-admin">
           {
             users.map(item => <div key={item.id} className="admin-page">
@@ -54,6 +66,7 @@ const AdminPage = () => {
               <button className="delete-btn" onClick={() => deleteUser(item.id)}>Delete</button>
             </div>)
           }
+          <p>{error}</p>
         </div>
         <RegistryAdmin />
       </div>

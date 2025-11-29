@@ -62,4 +62,13 @@ public class AdminController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @PostMapping("/search-by-username")
+    public ResponseEntity<?> searchUsername(@RequestBody String input){
+        try {
+            List<UserDTO> searching = this.adminService.searchByUsername(input);
+            return new ResponseEntity<>(searching, HttpStatus.OK);
+        } catch (CashFlowException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
