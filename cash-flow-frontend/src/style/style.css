@@ -42,7 +42,7 @@ body {
   transition: 0.5s;
 }
 
-.input, .input-search {
+.input, .container-sendemail .second-container-sendemail form .input-text, .input-search {
   background-color: #6e0b8c;
   padding: 5px;
   width: 250px;
@@ -55,10 +55,10 @@ body {
   border-radius: 5px;
   box-shadow: 2px 2px rgba(103, 95, 95, 0.753);
 }
-.input::-moz-placeholder, .input-search::-moz-placeholder {
+.input::-moz-placeholder, .container-sendemail .second-container-sendemail form .input-text::-moz-placeholder, .input-search::-moz-placeholder {
   color: rgb(97, 92, 92);
 }
-.input::placeholder, .input-search::placeholder {
+.input::placeholder, .container-sendemail .second-container-sendemail form .input-text::placeholder, .input-search::placeholder {
   color: rgb(97, 92, 92);
 }
 
@@ -76,7 +76,7 @@ body {
   font-size: 20px;
 }
 
-.registre-controller-main .registry-form .input, .registre-controller-main .registry-form .input-search {
+.registre-controller-main .registry-form .input, .registre-controller-main .registry-form .container-sendemail .second-container-sendemail form .input-text, .container-sendemail .second-container-sendemail form .registre-controller-main .registry-form .input-text, .registre-controller-main .registry-form .input-search {
   border-radius: 8px;
   color: white;
 }
@@ -145,7 +145,7 @@ body {
   text-align: center;
   color: white;
 }
-.border-class .input, .border-class .input-search {
+.border-class .input, .border-class .container-sendemail .second-container-sendemail form .input-text, .container-sendemail .second-container-sendemail form .border-class .input-text, .border-class .input-search {
   color: white;
 }
 
@@ -326,4 +326,41 @@ body {
 
 .input-search {
   height: 25px;
+}
+
+.container-sendemail {
+  display: flex;
+  justify-content: center;
+  height: 70%;
+}
+.container-sendemail .second-container-sendemail {
+  background-color: black;
+  box-shadow: 5px 5px rgba(16, 15, 15, 0.447);
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+.container-sendemail .second-container-sendemail form {
+  display: flex;
+  flex-direction: column;
+}
+.container-sendemail .second-container-sendemail form .input-text {
+  margin: 5px auto;
+  width: 90%;
+  height: 30vh;
+}
+.container-sendemail .second-container-sendemail form input {
+  width: 90%;
+  margin: 10px auto;
+  background-color: grey;
+  font-size: 25px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 2px 5px rgba(173, 169, 169, 0.637);
+  transition: 0.5s;
+}
+.container-sendemail .second-container-sendemail form input:hover {
+  background-color: rgb(88, 88, 88);
+  box-shadow: 2px 5px rgb(88, 88, 88);
 }/*# sourceMappingURL=style.css.map */

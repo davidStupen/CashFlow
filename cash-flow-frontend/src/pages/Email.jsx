@@ -24,13 +24,15 @@ const Email = () => {
      }
   }
   return(
-    <div>
-      <h1>Send email</h1>
-      <p>{error}</p>
-      <form onSubmit={handlerSubmit}>
-        <input type="text" value={input} onChange={e => setInput(e.target.value)} name="input" placeholder="text"/>
-        <input type="submit" value="Send Email"/>
-      </form>
+    <div className="container-sendemail">
+      <div className="second-container-sendemail">
+        <h1 className="heading">Send email</h1>
+        <p>{error}</p>
+        <form onSubmit={handlerSubmit}>
+          <textarea className="input-text" type="text" value={input} onChange={e => setInput(e.target.value)} name="input" placeholder="text" />
+          <input type="submit" value="Send Email" />
+        </form>
+      </div>
     </div>
   )
 }

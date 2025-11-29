@@ -263,3 +263,40 @@ body{
     @extend .input;
     height: 25px;
 }
+.container-sendemail{
+    display: flex;
+    justify-content: center;
+    height: 70%;
+    .second-container-sendemail {
+            background-color: black;
+            box-shadow: 5px 5px rgba(16, 15, 15, 0.447);
+            width: 500px;
+            display: flex;
+            flex-direction: column;
+            form {
+                    display: flex;
+                    flex-direction: column;
+                    .input-text {
+                            @extend .input;
+                            margin: 5px auto;
+                            width: 90%;
+                            height: 30vh;
+                        }
+                    input{
+                        width: 90%;
+                        margin: 10px auto;
+                        background-color: grey;
+                        font-size: 25px;
+                        color: white;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        box-shadow: 2px 5px rgba(173, 169, 169, 0.637);
+                        transition: .5s;
+                        &:hover{
+                            background-color: rgb(88, 88, 88);
+                            box-shadow: 2px 5px rgb(88, 88, 88);
+                        }
+                    }
+                }
+    }
+}
