@@ -21,7 +21,7 @@ const Expenses = (props) => {
       }
     }
     fetch()
-  }, [props.userId, props.idCategory])
+  }, [props])
   return(
     <div className="expenses">
       <p>total expenses for the last 28 days = {expenses} KČ.</p>
